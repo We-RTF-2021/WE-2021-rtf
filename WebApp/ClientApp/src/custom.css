@@ -1,14 +1,50 @@
 /* Provide sufficient contrast against white background */
+
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 code {
-  color: #e01a76;
+    color: #e01a76;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.info {
+    color: #fff;
+}
+
+body {
+    background-color: rgba(0, 0, 0, 0.8);
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    position: relative;
+    font-family: "Tahoma";
+    color: rgb(209, 209, 217);
+    text-decoration: none;
+    text-shadow: 0 -1px 2px rgba(0, 0, 0, .2);
+    /* padding: .5em 1em; */
+    margin: 1em;
+    outline: none;
+    border-radius: 3px;
+    background: linear-gradient(rgb(60, 62, 60), rgb(41, 41, 46)) rgb(60, 62, 60);
+    box-shadow: 0 1px rgba(255, 255, 255, .2) inset, 0 3px 5px rgba(0, 1, 6, .5), 0 0 1px 1px rgba(0, 1, 6, .2);
+    /* transition: .2s ease-in-out; */
+}
+
+button:hover:not(:active) {
+    background: linear-gradient(rgb(86, 86, 84), rgb(60, 61, 66)) rgb(86, 86, 94);
+}
+
+button:active {
+    top: 1px;
+    background: linear-gradient(rgb(56, 57, 52), rgb(36, 37, 42)) rgb(56, 57, 52);
+    box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
 }

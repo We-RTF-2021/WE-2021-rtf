@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route } from "react-router";
 import { Layout } from "./components/Layout";
 import { Home } from "./components/Home";
+import { NewWord } from "./components/NewWord";
 import { FetchData } from "./components/FetchData";
 import { Counter } from "./components/Counter";
 import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
@@ -17,12 +18,15 @@ export default class App extends Component {
     return (
       <Layout>
         <Route exact path="/" component={Home} />
-        <Route path="/counter" component={Counter} />
-        <AuthorizeRoute path="/fetch-data" component={FetchData} />
-        <Route
+        <Route path="/check" component={Home} />
+        <Route path="/new-words" component={NewWord} />
+        <Route path="/new-collection" component={Home} />
+        <Route path="/account" component={Home} />
+        {/* <AuthorizeRoute path="/fetch-data" component={FetchData} /> */}
+        {/* {<Route
           path={ApplicationPaths.ApiAuthorizationPrefix}
           component={ApiAuthorizationRoutes}
-        />
+        />} */}
       </Layout>
     );
   }
