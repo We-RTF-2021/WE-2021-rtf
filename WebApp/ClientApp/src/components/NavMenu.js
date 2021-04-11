@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { LoginMenu } from './api-authorization/LoginMenu';
-import './NavMenu.css';
+import "./NavMenu.css"
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -31,7 +31,8 @@ export class NavMenu extends Component {
               <NavLink tag={Link} className="sliding-button" to="/check">Проверка</NavLink>
               <NavLink tag={Link} className="sliding-button" to="/new-words">Новые слова</NavLink>
               <NavLink tag={Link} className="sliding-button" to="/new-collection">Новый набор</NavLink>
-              <NavLink tag={Link} className="sliding-button" to="/account">Личный кабинет</NavLink>
+              {/* <NavLink tag={Link} className="sliding-button" to="/account">Личный кабинет</NavLink> */}
+              <LoginMenu></LoginMenu>
             </div>
           </Collapse>
         </Container>

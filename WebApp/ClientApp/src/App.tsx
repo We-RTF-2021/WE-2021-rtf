@@ -18,15 +18,15 @@ export default class App extends Component {
     return (
       <Layout>
         <Route exact path="/" component={Home} />
-        <Route path="/check" component={Home} />
-        <Route path="/new-words" component={NewWord} />
-        <Route path="/new-collection" component={Home} />
-        <Route path="/account" component={Home} />
+        <AuthorizeRoute path="/check" component={Home} />
+        <AuthorizeRoute path="/new-words" component={NewWord} />
+        <AuthorizeRoute path="/new-collection" component={Home} />
+        {/* <AuthorizeRoute path="/account" component={Home} /> */}
         {/* <AuthorizeRoute path="/fetch-data" component={FetchData} /> */}
-        {/* {<Route
+        {<Route
           path={ApplicationPaths.ApiAuthorizationPrefix}
           component={ApiAuthorizationRoutes}
-        />} */}
+        />}
       </Layout>
     );
   }
