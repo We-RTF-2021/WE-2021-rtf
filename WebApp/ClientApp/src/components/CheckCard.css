@@ -27,6 +27,14 @@
     box-shadow: 0 1px rgba(255, 255, 255, .2) inset, 0 3px 5px rgba(0, 1, 6, .5), 0 0 1px 1px rgba(0, 1, 6, .2);
 } */
 
+.result {
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .box {
     color: whitesmoke;
     font-family: "Tahoma";
@@ -42,13 +50,14 @@
     align-items: center;
 }
 
-.answer{
+.answer {
     position: relative;
     display: flex;
-    flex-direction:row;
+    flex-direction: row;
     padding-top: 70px;
 }
-.button{
+
+.button {
     height: 50px;
     width: 130px;
     font-size: 20px;
@@ -56,6 +65,7 @@
     align-items: center;
     justify-content: center;
 }
+
 .collection2 {
     position: relative;
     display: flex;
@@ -73,6 +83,6 @@
     margin: 1em;
     outline: none;
     border-radius: 3px;
-    background: linear-gradient(rgb(60, 62, 60), rgb(41, 41, 46) rgb(60, 62, 60)); 
+    background: linear-gradient(rgb(60, 62, 60), rgb(41, 41, 46) rgb(60, 62, 60));
     box-shadow: 0 1px rgba(255, 255, 255, .2) inset, 0 3px 5px rgba(0, 1, 6, .5), 0 0 1px 1px rgba(0, 1, 6, .2);
 }
