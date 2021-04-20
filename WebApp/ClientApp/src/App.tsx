@@ -3,6 +3,7 @@ import { Route } from "react-router";
 import { Layout } from "./components/Layout";
 import { Home } from "./components/Home";
 import { Check } from "./components/Check";
+import { NewCollection } from "./components/NewCollection";
 
 import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizationRoutes";
@@ -21,7 +22,7 @@ export default class App extends Component {
       <Layout>
         <Route exact path="/" component={Home} />
         <AuthorizeRoute path="/check" component={Check} />
-        <AuthorizeRoute path="/new-collection" component={Home} />
+        <AuthorizeRoute path="/new-collection" component={NewCollection} />
         <AuthorizeRoute path="/checkCard1" component={CheckCard1} />
         <AuthorizeRoute path="/checkCard2" component={CheckCard2} />
         <AuthorizeRoute path="/checkCard3" component={CheckCard3} />
