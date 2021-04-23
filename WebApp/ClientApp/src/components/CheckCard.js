@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import "./CheckCard.css"
 import { Link } from 'react-router-dom';
+import { NavLink } from 'reactstrap';
 
-export class CheckCard1 extends Component {
+export class CheckCard extends Component {
 
     constructor(props) {
         super(props);
@@ -39,24 +40,7 @@ export class CheckCard1 extends Component {
             countOfTrue: 2,
         }
     ];
-    renderNewCard() {
 
-    }
-
-    // getCollection() {
-    //     const result = [];
-    //     let card = this.collection.pop();
-    //     let grad = `linear-gradient(to top, rgb(60, 62, 60) 10%, rgb(41, 41, 46)50%, rgb(60, 62, 60) 80%, green 100%)`
-    //     result.push(
-    //         <div className="collection2" style={{ background: grad }}>
-    //             <p>{card.En_name}</p>
-    //             <div className="answer">
-    //                 <Link tag={Link} className="button" to="/checkCard2">Я знаю</Link>
-    //                 <Link tag={Link} className="button" to="/checkCard2">Я не знаю</Link>
-    //             </div>
-    //         </div>);
-    //     return <div className="collections">{result}</div>;
-    // }
     reRender(prop) {
         if (prop === "Я так и думал") {
             this.numberСorrectWords++;
@@ -87,7 +71,7 @@ export class CheckCard1 extends Component {
         let res = [];
         for (const e of this.state.buttons) {
             res.push(
-                <button className="button" onClick={() => this.reRender(e)}>{e}</button>
+                <button className="all-button answer-button" onClick={() => this.reRender(e)}>{e}</button>
             )
         }
         return <div className="answer">{res}</div>
@@ -97,38 +81,29 @@ export class CheckCard1 extends Component {
     firststate = () => {
         let grad = `linear-gradient(to top, rgb(60, 62, 60) 10%, rgb(41, 41, 46)50%, rgb(60, 62, 60) 80%, green 100%)`;
         return (
-            <div className="collection2" style={{ background: grad }}>
+            <div className="card" style={{ background: grad }}>
                 <p>{this.state.word}</p>
-                <div className="answer">{this.renderButtons()}</div>
+                {this.renderButtons()}
             </div>
         );
     }
 
     secondstate = () => (
-        <div className="collection2">
-            <div className="result">
-                <p>ТЫ ХОРОШО ПОРАБОТАЛ!!!</p>
-                {`Решено верно ${this.numberСorrectWords}/${this.collection.length}`}
-                <Link tag={Link} className="button" style={{ width: '200px' }} to="/check">К другим наборам</Link>
-            </div>
+        <div className="card result">
+            <p>МОЛОДЕЦ!!!</p>
+            {`Решено верно ${this.numberСorrectWords}/${this.collection.length}`}
+            <NavLink tag={Link} className="all-button back" style={{ width: '200px' }} to="/check">К другим наборам</NavLink>
 
         </div>
     );
 
     render() {
         return (
-            <div className="box">
+            <div className="card-box">
                 {this.state.pageState()}
             </div>
         );
     }
 
 
-    // render() {
-    //     return (
-    //         <div className="box">
-    //             {this.getCollection()}
-    //         </div>
-    //     );
-    // }
 }

@@ -10,9 +10,7 @@ import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizat
 import { ApplicationPaths } from "./components/api-authorization/ApiAuthorizationConstants";
 
 import "./custom.css";
-import { CheckCard1 } from "./components/CheckCard1";
-import { CheckCard2 } from "./components/CheckCard2";
-import { CheckCard3 } from "./components/CheckCard3";
+import { CheckCard } from "./components/CheckCard";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -23,9 +21,7 @@ export default class App extends Component {
         <Route exact path="/" component={Home} />
         <AuthorizeRoute path="/check" component={Check} />
         <AuthorizeRoute path="/new-collection" component={NewCollection} />
-        <AuthorizeRoute path="/checkCard1" component={CheckCard1} />
-        <AuthorizeRoute path="/checkCard2" component={CheckCard2} />
-        <AuthorizeRoute path="/checkCard3" component={CheckCard3} />
+        <AuthorizeRoute path="/checkCard" component={CheckCard} />
         {<Route
           path={ApplicationPaths.ApiAuthorizationPrefix}
           component={ApiAuthorizationRoutes}

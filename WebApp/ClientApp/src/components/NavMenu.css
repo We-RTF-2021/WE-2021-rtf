@@ -1,33 +1,54 @@
-/* Прикольные кнопки меню */
-
-.container1 {
-    width: 100%;
-    margin: 0 auto;
-    padding: 0;
+.menu {
     display: flex;
+    margin-bottom: 40px;
     justify-content: center;
+    min-width: 700px;
 }
 
-.custom-progress-bar {
-    flex: 1;
-    text-decoration: none;
-    color: white;
+.menu-button {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
     padding: 15px 30px;
+    position: relative;
+    text-align: center;
+    color: white;
     border: 1px solid;
     border-image: linear-gradient(180deg, #ff3000, #ed0200, #ff096c, #d50082);
     border-image-slice: 1;
     font-family: 'Montserrat', sans-serif;
     text-transform: uppercase;
-    overflow: hidden;
     letter-spacing: 2px;
     transition: .8s cubic-bezier(.165, .84, .44, 1);
+}
+
+.main-button {
+    min-width: 120px;
     background: linear-gradient(135deg, orange, orange 60%, cyan);
 }
 
-.wheat {
-    background-color: wheat;
+.sliding-button:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 0;
+    width: 100%;
+    z-index: -1;
+    background: linear-gradient(180deg, #ff3000, #ed0200, #ff096c, #d50082);
+    transition: .8s cubic-bezier(.165, .84, .44, 1);
+}
+
+.sliding-button:hover {
+    background: rgba(255, 255, 255, 0);
+}
+
+.sliding-button:hover:before {
+    bottom: 0%;
+    top: auto;
+    height: 100%;
+}
+
+.menu-button:hover {
+    color: white;
 }

@@ -1,88 +1,48 @@
-/* .card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: transparent;
-}
-
-.word {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 250px;
-    width: 300px;
-    font-family: "Tahoma";
-    font-size: 300%;
-    font-weight: 700;
-    color: rgb(71, 71, 194);
-    text-decoration: none;
-    text-shadow: 0 -1px 2px rgba(0, 0, 0, .2);
-    text-align: center;
-    padding: .5em 1em;
-    margin: 1em;
-    outline: none;
-    border-radius: 3px;
-    background: linear-gradient(rgb(60, 62, 60), rgb(41, 41, 46)) rgb(60, 62, 60);
-    box-shadow: 0 1px rgba(255, 255, 255, .2) inset, 0 3px 5px rgba(0, 1, 6, .5), 0 0 1px 1px rgba(0, 1, 6, .2);
-} */
-
-.result {
-    font-size: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.box {
-    color: whitesmoke;
-    font-family: "Tahoma";
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 50px;
-}
-
-.collections {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.answer {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    padding-top: 70px;
-}
-
-.button {
-    height: 50px;
-    width: 130px;
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.collection2 {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 340px;
-    width: 340px;
-    font-family: "Tahoma";
-    font-size: 55px;
-    color: rgb(137, 137, 221);
-    text-decoration: none;
-    text-shadow: 0 -1px 2px rgba(0, 0, 0, .2);
-    text-align: center;
-    margin: 1em;
-    outline: none;
-    border-radius: 3px;
-    background: linear-gradient(rgb(60, 62, 60), rgb(41, 41, 46) rgb(60, 62, 60));
-    box-shadow: 0 1px rgba(255, 255, 255, .2) inset, 0 3px 5px rgba(0, 1, 6, .5), 0 0 1px 1px rgba(0, 1, 6, .2);
-}
+ .card {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     height: 350px;
+     width: 400px;
+     padding: 50px;
+     font-family: "Tahoma";
+     font-size: 55px;
+     color: rgb(137, 137, 221);
+     text-decoration: none;
+     text-shadow: 0 -1px 2px rgba(0, 0, 0, .2);
+     text-align: center;
+     box-shadow: 0 1px rgba(255, 255, 255, .2) inset, 0 3px 5px rgba(0, 1, 6, .5), 0 0 1px 1px rgba(0, 1, 6, .2);
+     border-radius: 6px;
+     background: linear-gradient(rgb(60, 62, 60), rgb(41, 41, 46) rgb(60, 62, 60));
+ }
+ 
+ .card-box {
+     margin-top: 10%;
+     display: flex;
+     justify-content: center;
+ }
+ 
+ .result {
+     background: linear-gradient(to top, rgb(60, 62, 60) 10%, rgb(41, 41, 46)50%, rgb(60, 62, 60) 80%);
+     font-size: 28px;
+ }
+ 
+ .answer-button {
+     font-size: 20px;
+     width: 45%;
+     padding: 5px;
+ }
+ 
+ .back {
+     margin-top: 30px;
+     font-size: 20px;
+     padding: 10px;
+ }
+ 
+ .answer {
+     margin-top: 30px;
+     width: 100%;
+     display: flex;
+     justify-content: space-between;
+ }

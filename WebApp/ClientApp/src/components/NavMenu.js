@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { Container, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { LoginMenu } from './api-authorization/LoginMenu';
 import "./NavMenu.css"
@@ -11,7 +11,7 @@ export class NavMenu extends Component {
   constructor(props) {
     super(props);
 
-    this.toggleNavbar = this.toggleNavbar.bind(this);
+    // this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
       collapsed: true,
       isAuthenticated: false,
@@ -32,34 +32,33 @@ export class NavMenu extends Component {
     });
   }
 
-  toggleNavbar() {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
-  }
+  // toggleNavbar() {
+  //   this.setState({
+  //     collapsed: !this.state.collapsed
+  //   });
+  // }
 
-  getAccountElement() {
-    const { isAuthenticated } = this.state;
-    if (isAuthenticated) {
-      return (<NavLink tag={Link} className="sliding-button" to="/account">Личный кабинет</NavLink>);
-    }
-    else
-      return null;
-  }
+  // getAccountElement() {
+  //   const { isAuthenticated } = this.state;
+  //   if (isAuthenticated) {
+  //     return (<NavLink tag={Link} className="sliding-button" to="/account">Личный кабинет</NavLink>);
+  //   }
+  //   else
+  //     return null;
+  // }
 
   render() {
     return (
-        <header>
-            <Container>
-                <div className="container1">
-                    <NavLink tag={Link} className="custom-progress-bar" to="/">English Cards</NavLink>
-                    <NavLink tag={Link} className="sliding-button" to="/check">Проверка</NavLink>
-                    <NavLink tag={Link} className="sliding-button" to="/new-collection">Новый набор</NavLink>
-                    {/* {this.getAccountElement()} */}
-                    <LoginMenu></LoginMenu>
-                </div>
-            </Container>
-        </header >
+      <header>
+        <Container >
+          <div className="menu">
+            <NavLink tag={Link} className="menu-button main-button" to="/">English Cards</NavLink>
+            <NavLink tag={Link} className="menu-button sliding-button" to="/check">Проверка</NavLink>
+            <NavLink tag={Link} className="menu-button sliding-button" to="/new-collection">Новый набор</NavLink>
+            <LoginMenu></LoginMenu>
+          </div>
+        </Container>
+      </header >
     );
   }
 }

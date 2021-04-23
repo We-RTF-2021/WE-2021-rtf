@@ -1,94 +1,52 @@
-/* Provide sufficient contrast against white background */
-
-a {
-    color: #0366d6;
-}
-
-code {
-    color: #e01a76;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-.info {
-    color: #fff;
-}
-
 body {
-    background-color: rgba(0, 0, 0, 0.8);
-    margin: 0;
-    padding: 0;
+    /* background-color: #0a0a0a;
+    background-image: -webkit-repeating-linear-gradient(315deg, #232323, #232323 10%, transparent 10%, transparent 50%), -webkit-repeating-linear-gradient(225deg, #232323, #232323 10%, transparent 10%, transparent 50%);
+    background-image: repeating-linear-gradient(135deg, #232323, #232323 10%, transparent 10%, transparent 50%), repeating-linear-gradient(-135deg, #232323, #232323 10%, transparent 10%, transparent 50%);
+    background-size: 12px 12px; */
+    background: radial-gradient(black 15%, transparent 16%) 0 0, radial-gradient(black 15%, transparent 16%) 8px 8px, radial-gradient(rgba(255, 255, 255, .1) 15%, transparent 20%) 0 1px, radial-gradient(rgba(255, 255, 255, .1) 15%, transparent 20%) 8px 9px;
+    background-color: #282828;
+    background-size: 16px 16px;
+    /* background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px, linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px, linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px, linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px, linear-gradient(90deg, #1b1b1b 10px, transparent 10px), linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+    background-color: #131313;
+    background-size: 20px 20px; */
     font-family: 'Montserrat', sans-serif;
     color: whitesmoke;
 }
 
-.sliding-button {
-    word-wrap: break-word;
+.info {
     display: flex;
     justify-content: center;
     align-items: center;
-    text-decoration: none;
-    color: white;
-    /* display: inline-block; */
-    position: relative;
-    border: 1px solid;
-    border-image: linear-gradient(180deg, #ff3000, #ed0200, #ff096c, #d50082);
-    border-image-slice: 1;
-    /*margin: 10px 20px;*/
-    font-family: 'Montserrat', sans-serif;
-    text-transform: uppercase;
-    overflow: hidden;
-    letter-spacing: 2px;
-    transition: .8s cubic-bezier(.165, .84, .44, 1);
+    flex-direction: column;
+    text-align: center;
+    font-size: 200%;
+    margin: 50px;
 }
 
-.sliding-button:before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 0;
-    width: 100%;
-    z-index: -1;
-    color: white;
-    background: linear-gradient(180deg, #ff3000, #ed0200, #ff096c, #d50082);
-    transition: .8s cubic-bezier(.165, .84, .44, 1);
+.start {
+    padding: 10px;
+    width: 150px;
+    margin-top: 100px;
 }
 
-.sliding-button:hover {
-    background: rgba(255, 255, 255, 0);
-}
-
-.sliding-button:hover:before {
-    bottom: 0%;
-    top: auto;
-    height: 100%;
-}
-
-.button {
+.all-button {
     position: relative;
     font-family: "Tahoma";
-    color: rgb(209, 209, 217);
+    color: rgb(191, 191, 197);
     text-decoration: none;
     text-shadow: 0 -1px 2px rgba(0, 0, 0, .2);
-    /* padding: .5em 1em; */
-    margin: 1em;
     outline: none;
-    border-radius: 3px;
-    background: linear-gradient(rgb(60, 62, 60), rgb(41, 41, 46)) rgb(60, 62, 60);
+    border-radius: 10px;
+    background: linear-gradient(rgb(79, 82, 79), rgb(42, 42, 46)) rgb(79, 82, 79);
     box-shadow: 0 1px rgba(255, 255, 255, .2) inset, 0 3px 5px rgba(0, 1, 6, .5), 0 0 1px 1px rgba(0, 1, 6, .2);
-    /* transition: .2s ease-in-out; */
 }
 
-.button:hover:not(:active) {
+.all-button:hover:not(:active) {
     background: linear-gradient(rgb(86, 86, 84), rgb(60, 61, 66)) rgb(86, 86, 94);
+    color: rgb(255, 255, 255);
 }
 
-.button:active {
+.all-button:active {
     top: 1px;
     background: linear-gradient(rgb(56, 57, 52), rgb(36, 37, 42)) rgb(56, 57, 52);
     box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);

@@ -46,16 +46,16 @@ export class LoginMenu extends Component {
 
     authenticatedView(userName, profilePath, logoutPath) {
         return (<Fragment>
-            <NavLink tag={Link} className="sliding-button" to={profilePath}>Профиль</NavLink>
-            <NavLink tag={Link} className="sliding-button" to={logoutPath}>Logout</NavLink>
+            <NavLink tag={Link} className="menu-button sliding-button" to={profilePath}>Профиль</NavLink>
+            <NavLink tag={Link} className="menu-button sliding-button" to={logoutPath}>Logout</NavLink>
         </Fragment>);
 
     }
 
     anonymousView(registerPath, loginPath) {
         return (<Fragment>
-            <NavLink tag={Link} className="sliding-button" to={registerPath}>Register</NavLink>
-            <NavLink tag={Link} className="sliding-button" to={loginPath}>Login</NavLink>
+            <NavLink tag={Link} className="menu-button sliding-button" to={registerPath}>Register</NavLink>
+            <NavLink tag={Link} className="menu-button sliding-button" to={loginPath}>Login</NavLink>
         </Fragment>);
     }
 }
