@@ -2,6 +2,7 @@ import React from 'react'
 import { Component } from 'react';
 import authService from './AuthorizeService';
 import { AuthenticationResultStatus } from './AuthorizeService';
+import { Route, Redirect } from 'react-router-dom';
 import { QueryParameterNames, LogoutActions, ApplicationPaths } from './ApiAuthorizationConstants';
 
 // The main responsibility of this component is to handle the user's logout process.
@@ -48,7 +49,10 @@ export class Logout extends Component {
             return <div></div>
         }
         if (!!message) {
-            return (<div>{message}</div>);
+            return <Route
+                render={(props) => {
+                    return <Redirect to="/" />
+                }} />
         } else {
             const action = this.props.action;
             switch (action) {
@@ -83,6 +87,7 @@ export class Logout extends Component {
             }
         } else {
             this.setState({ message: "You successfully logged out!" });
+
         }
     }
 

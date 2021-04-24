@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Container, NavLink } from 'reactstrap';
+import { Container } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { LoginMenu } from './api-authorization/LoginMenu';
 import "./NavMenu.css"

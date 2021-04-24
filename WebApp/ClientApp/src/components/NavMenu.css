@@ -5,6 +5,10 @@
     min-width: 700px;
 }
 
+.active {
+    background-color: rgba(255, 174, 0, 0.699);
+}
+
 .menu-button {
     display: flex;
     justify-content: center;
@@ -51,4 +55,5 @@
 
 .menu-button:hover {
     color: white;
+    text-decoration: none;
 }
