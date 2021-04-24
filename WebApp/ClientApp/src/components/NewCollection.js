@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import "./NewCollection.css";
-import { Link } from 'react-router-dom';
-import { NavLink } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
 
 export class NewCollection extends Component {
     static displayName = NewCollection.name;
@@ -46,9 +45,9 @@ export class NewCollection extends Component {
             <div className="newCollection-box">
                 <h2>Добавление набора карточек</h2>
 
-                <label htmlFor="Name">
+                <label htmlFor="Cards">
                     Название набора
-                <input type="text" className="inp" name="Name" id="Name" placeholder="Например, 30 самых важных слов" />
+                <input type="text" className="inp" name="Cards" id="Cards" placeholder="Например, 30 самых важных слов" />
                 </label>
                 <label htmlFor="Description">
                     Описание
@@ -60,21 +59,20 @@ export class NewCollection extends Component {
                         <div className="newWord">
                             <input type="text" className="left-russian" id={"r" + index} placeholder="Слово на русском" currentValue="" />
                             <input type="text" id={"e" + index} className="right-english" placeholder="Перевод на английском" currentValue={item.english} />
-                            <button id={"b" + index} className="all-button plus-minus" onClick={this.addWord}>Добавить</button>
+                            <a id={"b" + index} className="all-button plus-minus" onClick={this.addWord}>Добавить</a>
                         </div>
-
                     </Fragment>)
                     :
                     (<Fragment key={index}>
                         <div className="newWord">
                             <input type="text" className="left-russian" id={"r" + index} placeholder="Слово на русском" />
                             <input type="text" id={"e" + index} className="right-english" placeholder="Перевод на английском" />
-                            <button id={"b" + index} className="all-button plus-minus" onClick={(e) => { theComponent.deleteWord(e.currentTarget.id); }} >Удалить</button>
+                            <a id={"b" + index} className="all-button plus-minus" onClick={(e) => { theComponent.deleteWord(e.currentTarget.id); }} >Удалить</a>
                         </div>
                     </Fragment>)
                 )}
                 <br />
-                <NavLink tag={Link} id="confirmButton" to="/" className="all-button plus-minus confirmButton"><b>Готово</b></NavLink>
+                <NavLink id="confirmButton" to="/" className="all-button plus-minus"><b>Готово</b></NavLink>
             </div>
         );
     }

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { LoginMenu } from './api-authorization/LoginMenu';
-import "./NavMenu.css"
 import authService from './api-authorization/AuthorizeService';
+import "./NavMenu.css"
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -12,7 +11,6 @@ export class NavMenu extends Component {
   constructor(props) {
     super(props);
 
-    // this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
       collapsed: true,
       isAuthenticated: false,
@@ -33,12 +31,6 @@ export class NavMenu extends Component {
     });
   }
 
-  // toggleNavbar() {
-  //   this.setState({
-  //     collapsed: !this.state.collapsed
-  //   });
-  // }
-
   // getAccountElement() {
   //   const { isAuthenticated } = this.state;
   //   if (isAuthenticated) {
@@ -53,9 +45,9 @@ export class NavMenu extends Component {
       <header>
         <Container >
           <div className="menu">
-            <NavLink tag={Link} className="menu-button main-button" to="/">English Cards</NavLink>
-            <NavLink tag={Link} className="menu-button sliding-button" to="/check">Проверка</NavLink>
-            <NavLink tag={Link} className="menu-button sliding-button" to="/new-collection">Новый набор</NavLink>
+            <NavLink className="menu-button main-button" to="/">English Cards</NavLink>
+            <NavLink className="menu-button sliding-button" to="/check">Проверка</NavLink>
+            <NavLink className="menu-button sliding-button" to="/new-collection">Новый набор</NavLink>
             <LoginMenu></LoginMenu>
           </div>
         </Container>

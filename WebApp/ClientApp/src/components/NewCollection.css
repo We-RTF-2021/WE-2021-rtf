@@ -55,14 +55,7 @@ input.right-english {
 }
 
 .plus-minus {
-    text-align: center;
-    border-radius: 15px;
     font-size: 18px;
-    width: 120px;
     margin-left: 20px;
-    padding: 5px
-}
-
-.confirmButton {
-    font-size: 20px;
+    padding: 5px 10px;
 }

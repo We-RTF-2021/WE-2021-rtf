@@ -6,7 +6,7 @@
 }
 
 .active {
-    background-color: rgba(255, 174, 0, 0.699);
+    background-color: darkcyan !important;
 }
 
 .menu-button {
@@ -28,7 +28,16 @@
 
 .main-button {
     min-width: 120px;
-    background: linear-gradient(135deg, orange, orange 60%, cyan);
+    background: crimson;
+    box-shadow: 0 -150px 70px -120px teal inset, 0 -220px 70px -120px yellowgreen inset, 0 -280px 70px -120px gold inset;
+    animation: gradientAnim 4s infinite alternate;
+}
+
+@keyframes gradientAnim {
+    50% {
+        background: darkviolet;
+        box-shadow: 0 -140px 70px -120px mediumorchid inset, 0 -210px 70px -120px teal inset, 0 -280px 70px -120px plum inset;
+    }
 }
 
 .sliding-button:before {

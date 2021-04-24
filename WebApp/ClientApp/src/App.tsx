@@ -3,6 +3,7 @@ import { Route } from "react-router";
 import { Layout } from "./components/Layout";
 import { Home } from "./components/Home";
 import { Check } from "./components/Check";
+import { CheckCard } from "./components/CheckCard";
 import { NewCollection } from "./components/NewCollection";
 
 import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
@@ -10,7 +11,6 @@ import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizat
 import { ApplicationPaths } from "./components/api-authorization/ApiAuthorizationConstants";
 
 import "./custom.css";
-import { CheckCard } from "./components/CheckCard";
 
 export default class App extends Component {
   static displayName = App.name;
