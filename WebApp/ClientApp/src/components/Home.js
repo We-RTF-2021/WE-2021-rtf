@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+//import AuthorizeRoute from './api-authorization/AuthorizeRoute';
 
 export class Home extends Component {
   static displayName = Home.name;

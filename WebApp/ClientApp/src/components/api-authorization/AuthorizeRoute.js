@@ -1,4 +1,4 @@
-import React from 'react'
+//import React from 'react'
 import { Component } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { ApplicationPaths, QueryParameterNames } from './ApiAuthorizationConstants'
@@ -36,7 +36,7 @@ export default class AuthorizeRoute extends Component {
             return <Route {...rest}
                 render={(props) => {
                     if (authenticated) {
-                        return <Component {...props} />
+                        return <Component {...props} sid={this.state.sid} />
                     } else {
                         return <Redirect to={redirectUrl} />
                     }
@@ -46,11 +46,18 @@ export default class AuthorizeRoute extends Component {
 
     async populateAuthenticationState() {
         const authenticated = await authService.isAuthenticated();
-        this.setState({ ready: true, authenticated });
+
+        const u = await authService.getUser();
+        const sid = u ? u.sid : "none";
+
+        console.log(u);
+
+        this.setState({
+            ready: true, authenticated, sid});
     }
 
     async authenticationChanged() {
-        this.setState({ ready: false, authenticated: false });
+        this.setState({ ready: false, authenticated: false, sid:"none"});
         await this.populateAuthenticationState();
     }
 }

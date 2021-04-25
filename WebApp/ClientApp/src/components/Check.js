@@ -67,7 +67,7 @@ export class Check extends Component {
         for (const e of this.collection) {
             let grad = `linear-gradient(to right, green ${e.progress.know}%, yellow ${(e.progress.know + (e.progress.know > 5 ? 5 : 0))}%, yellow ${e.progress.know + e.progress.study}%, red ${e.progress.know + e.progress.study + 5}%)`
             result.push(
-                <div className="collection">
+                <div className="collection" key={result.length}>
                     <p><b>{e.name}</b></p>
                     <p>{e.countWord} слов</p>
                     <div className="progress" style={{ background: grad }}></div>
