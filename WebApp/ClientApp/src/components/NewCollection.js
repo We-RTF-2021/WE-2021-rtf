@@ -44,7 +44,7 @@ export class NewCollection extends Component {
         return (
             <div className="newCollection-box">
                 <h2>Добавление набора карточек</h2>
-                <h1>{this.props.sid}</h1>
+                {/* <h1>{this.props.sid}</h1> */}
                 <label htmlFor="Cards">
                     Название набора
                 <input type="text" className="inp" name="Cards" id="Cards" placeholder="Например, 30 самых важных слов" />
@@ -57,8 +57,8 @@ export class NewCollection extends Component {
                 {this.state.ids.map((item, index) => index === this.state.ids.length - 1 ?
                     (<Fragment key={index}>
                         <div className="newWord">
-                            <input type="text" className="left-russian" id={"r" + index} placeholder="Слово на русском"/>
-                            <input type="text" id={"e" + index} className="right-english" placeholder="Перевод на английском"/>
+                            <input type="text" className="left-russian" id={"r" + index} placeholder="Слово на русском" />
+                            <input type="text" id={"e" + index} className="right-english" placeholder="Перевод на английском" />
                             <a id={"b" + index} className="all-button plus-minus" onClick={this.addWord}>Добавить</a>
                         </div>
                     </Fragment>)
