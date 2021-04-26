@@ -1,48 +1,91 @@
- .card {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     justify-content: center;
-     height: 350px;
-     width: 400px;
-     padding: 50px;
-     font-family: "Tahoma";
-     font-size: 55px;
-     color: rgb(137, 137, 221);
-     text-decoration: none;
-     text-shadow: 0 -1px 2px rgba(0, 0, 0, .2);
-     text-align: center;
-     box-shadow: 0 1px rgba(255, 255, 255, .2) inset, 0 3px 5px rgba(0, 1, 6, .5), 0 0 1px 1px rgba(0, 1, 6, .2);
-     border-radius: 6px;
-     background: linear-gradient(rgb(60, 62, 60), rgb(41, 41, 46) rgb(60, 62, 60));
- }
- 
- .card-box {
-     margin-top: 10%;
-     display: flex;
-     justify-content: center;
- }
- 
- .result {
-     background: linear-gradient(to top, rgb(60, 62, 60) 10%, rgb(41, 41, 46)50%, rgb(60, 62, 60) 80%);
-     font-size: 28px;
- }
- 
- .answer-button {
-     font-size: 20px;
-     width: 45%;
-     padding: 5px;
- }
- 
- .back {
-     margin-top: 30px;
-     font-size: 20px;
-     padding: 10px;
- }
- 
- .answer {
-     margin-top: 30px;
-     width: 100%;
-     display: flex;
-     justify-content: space-between;
- }
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 350px;
+    width: 400px;
+    padding: 50px;
+    font-family: "Tahoma";
+    font-size: 55px;
+    color: rgb(137, 137, 221);
+    text-decoration: none;
+    text-shadow: 0 -1px 2px rgba(0, 0, 0, .2);
+    text-align: center;
+    box-shadow: 0 1px rgba(255, 255, 255, .2) inset, 0 3px 5px rgba(0, 1, 6, .5), 0 0 1px 1px rgba(0, 1, 6, .2);
+    border-radius: 6px;
+    background: linear-gradient(rgb(60, 62, 60), rgb(41, 41, 46), rgb(60, 62, 60));
+}
+
+.card-box {
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* 
+.result {
+    display: flex;
+    justify-content: center;
+} */
+
+.answer-button {
+    font-size: 20px;
+    width: 45%;
+    padding: 5px;
+    margin: auto;
+}
+
+.back-ol {
+    margin-top: 30px;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.answer {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.flip-container {
+    perspective: 1000px;
+}
+
+.flip-container.hover .flipper {
+    transform: rotateY(180deg);
+}
+
+.flip-container,
+.front,
+.back {
+    width: 400px;
+    height: 350px;
+}
+
+.flipper {
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.front,
+.back {
+    backface-visibility: hidden;
+    border-radius: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.front {
+    z-index: 2;
+    /* background-color: cyan; */
+}
+
+.back {
+    transform: rotateY(180deg);
+    /* background-color: aquamarine; */
+}
