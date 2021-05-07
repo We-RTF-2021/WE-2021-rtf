@@ -12,7 +12,6 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class SetController : ControllerBase
@@ -38,21 +37,20 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        [Produces("application/json", "application/xml")]
-        public void Post([FromBody] string Data)
+        public void Post([FromBody] SetWithWords data)
         {
-            var e = JsonSerializer.Deserialize<fef>(Data);
+            //var e = JsonSerializer.Deserialize<fef>(Data);
             var we = new Set();
-            we.Name = e.nameOfSet;
-            we.CountOfCards = e.ids;
-            db.TestSet.Add(we);
-            db.SaveChanges();
+            // we.Name = Data.nameOfSet;
+            // we.CountOfCards = Data.ids;
+            // db.TestSet.Add(we);
+            // db.SaveChanges();
         }
 
-        class fef
+        public class fef
         {
-            public string nameOfSet;
-            public int ids;
+            public string nameOfSet { set; get; }
+            public int ids { set; get; }
         }
     }
 }

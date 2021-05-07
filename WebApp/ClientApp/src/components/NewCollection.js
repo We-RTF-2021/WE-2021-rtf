@@ -64,21 +64,21 @@ export class NewCollection extends Component {
 
 
     async postForm() {
-        let set = {
-            nameOfset: 'this.state.nameOfSet',
-            ids: this.state.ids.length
-        }
+        let set = this.state;
         const token = await authService.getAccessToken();
         let f = !token ? {
-            'Content-Type': 'application/json;charset=utf-8'
+            'Content-Type': 'application/json; charset=UTF-8'
         } : {
-            'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json;charset=utf-8'
+            'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json; charset=UTF-8'
         };
-        let c = JSON.stringify({ nameOfset: this.state.nameOfSet, ids: this.state.ids.length });
+        let c = JSON.stringify(set);
         let response = await fetch('set', {
             method: 'POST',
-            headers: f,
-            body: JSON.stringify({ nameOfset: this.state.nameOfSet, ids: this.state.ids.length })
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: "same-origin",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(set)
         });
     }
 

@@ -1,11 +1,11 @@
 public class SetWithWords
 {
-    public string nameOfSet;
-    public Word[] ids;
+    public string nameOfSet { set; get; }
+    public Word[] ids { set; get; }
 }
 
 public class Word
 {
-    public string russian;
-    public string english;
+    public string russian { set; get; }
+    public string english { set; get; }
 }
