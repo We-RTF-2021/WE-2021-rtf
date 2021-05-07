@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApp.Data.Migrations
