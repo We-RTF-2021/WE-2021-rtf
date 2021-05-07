@@ -17,5 +17,7 @@ namespace WebApp.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+        public DbSet<Set> TestSet { get; set; }
+
     }
 }

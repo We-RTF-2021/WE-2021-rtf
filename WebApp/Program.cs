@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebApp.Controllers;
 using WebApp.Data;
 
 namespace WebApp
@@ -15,7 +16,10 @@ namespace WebApp
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
+
             host.PrepareDB();
+            // CreateTables.AddData();
+            //var w = CreateTables.GetDate();
             host.Run();
         }
 

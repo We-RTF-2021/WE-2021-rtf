@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import "./NewCollection.css";
 import { NavLink } from 'react-router-dom';
+import authService from './api-authorization/AuthorizeService';
 
 export class NewCollection extends Component {
     static displayName = NewCollection.name;
@@ -11,6 +12,7 @@ export class NewCollection extends Component {
         this.deleteWord = this.deleteWord.bind(this);
 
         this.state = {
+            nameOfSet: "",
             ids: [{
                 russian: "",
                 english: ""
@@ -18,16 +20,24 @@ export class NewCollection extends Component {
         }
     }
 
+
+
     deleteWord(bId) {
-        console.log(bId);
-        let id = parseInt(bId.substring(1));
-        console.log(id);
+        // console.log(bId);
+        // let id = parseInt(bId.substring(1));
+        // console.log(id);
         this.setState((state) => {
-            state.ids.splice(id, 1);
+            state.ids.pop();
             return state;
+            // state.ids.splice(id, 1);
+            // return state;
         });
     }
     addWord(e) {
+        if (!this.state.ids[this.state.ids.length - 1].russian || !this.state.ids[this.state.ids.length - 1].english) {
+
+            return;
+        }
         e.preventDefault();
         this.setState((state) => {
             state.ids.push({
@@ -39,6 +49,39 @@ export class NewCollection extends Component {
 
     }
 
+    handleChange(event) {
+        this.setState({ nameOfSet: event.target.value })
+    }
+
+    wordChange(id, field, event) {
+        this.setState(state => {
+            return {
+                ids: state.ids.map((e, index) => index === id ? { ...e, [field]: event.target.value } : e)
+            }
+        })
+    }
+
+
+
+    async postForm() {
+        let set = {
+            nameOfset: 'this.state.nameOfSet',
+            ids: this.state.ids.length
+        }
+        const token = await authService.getAccessToken();
+        let f = !token ? {
+            'Content-Type': 'application/json;charset=utf-8'
+        } : {
+            'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json;charset=utf-8'
+        };
+        let c = JSON.stringify({ nameOfset: this.state.nameOfSet, ids: this.state.ids.length });
+        let response = await fetch('set', {
+            method: 'POST',
+            headers: f,
+            body: JSON.stringify({ nameOfset: this.state.nameOfSet, ids: this.state.ids.length })
+        });
+    }
+
     render() {
         let theComponent = this;
         return (
@@ -47,7 +90,7 @@ export class NewCollection extends Component {
                 {/* <h1>{this.props.sid}</h1> */}
                 <label htmlFor="Cards">
                     Название набора
-                <input type="text" className="inp" name="Cards" id="Cards" placeholder="Например, 30 самых важных слов" />
+                <input type="text" className="inp" name="Cards" id="Cards" onChange={this.handleChange.bind(this)} value={this.state.nameOfSet} placeholder={this.nameOfSet || "Например, 30 самых важных слов"} />
                 </label>
                 <label htmlFor="Description">
                     Описание
@@ -57,22 +100,22 @@ export class NewCollection extends Component {
                 {this.state.ids.map((item, index) => index === this.state.ids.length - 1 ?
                     (<Fragment key={index}>
                         <div className="newWord">
-                            <input type="text" className="left-russian" id={"r" + index} placeholder="Слово на русском" />
-                            <input type="text" id={"e" + index} className="right-english" placeholder="Перевод на английском" />
+                            <input type="text" className="left-russian" id={"r" + index} onChange={this.wordChange.bind(this, index, 'russian')} value={this.state.ids.russian} placeholder="Слово на русском" />
+                            <input type="text" id={"e" + index} className="right-english" onChange={this.wordChange.bind(this, index, 'english')} value={this.state.ids.english} placeholder="Перевод на английском" />
                             <a id={"b" + index} className="all-button plus-minus" onClick={this.addWord}>Добавить</a>
                         </div>
                     </Fragment>)
                     :
                     (<Fragment key={index}>
                         <div className="newWord">
-                            <input type="text" className="left-russian" id={"r" + index} placeholder="Слово на русском" />
-                            <input type="text" id={"e" + index} className="right-english" placeholder="Перевод на английском" />
+                            <input type="text" className="left-russian" id={"r" + index} onChange={this.wordChange.bind(this, index, 'russian')} value={this.state.ids.russian} placeholder="Слово на русском" />
+                            <input type="text" id={"e" + index} className="right-english" onChange={this.wordChange.bind(this, index, 'english')} value={this.state.ids.english} placeholder="Перевод на английском" />
                             <a id={"b" + index} className="all-button plus-minus" onClick={(e) => { theComponent.deleteWord(e.currentTarget.id); }} >Удалить</a>
                         </div>
                     </Fragment>)
                 )}
                 <br />
-                <NavLink id="confirmButton" to="/" className="all-button plus-minus"><b>Готово</b></NavLink>
+                <NavLink id="confirmButton" onClick={this.postForm.bind(this)} to="/" className="all-button plus-minus"><b>Готово</b></NavLink>
             </div>
         );
     }
