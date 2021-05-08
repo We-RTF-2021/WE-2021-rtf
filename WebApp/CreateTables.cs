@@ -36,10 +36,10 @@ namespace WebApp
             connection.Open();
             SqliteCommand command1 = new SqliteCommand();
             command1.Connection = connection;
-            //command1.CommandText = "INSERT INTO Sets (Name, CountOfCards,PersonId) VALUES " +
-            //    "('Путешествие', 15, NULL), " +
-            //    "('Фрукты и овощи', 15, NULL), " +
-            //    "('Транспорт', 15, NULL)";
+            command1.CommandText = "INSERT INTO Sets (Name, CountOfCards,PersonId) VALUES " +
+                "('Путешествие', 15, NULL), " +
+                "('Фрукты и овощи', 15, NULL), " +
+                "('Транспорт', 15, NULL)";
             command1.CommandText = "INSERT INTO Cards (EN_Name, RU_Name,DaysForNext, Status, SetID) VALUES " +
                 "('Beach','Пляж',1,1,1), " +
                 "('Lounger','Шезлонг',1,1,1), " +
@@ -95,7 +95,7 @@ namespace WebApp
                 "('Carrot','Морковь',1,1,2), " +
                 "('Grape','Виноград',1,1,2), " +
                 "('Cherry','Вишня',1,1,2), " +
-                "('Strawberry','Клубника',1,1,2), ";
+                "('Strawberry','Клубника',1,1,2)";
             command1.ExecuteNonQuery();
             connection.Close();
         }

@@ -19,13 +19,11 @@ namespace WebApp.Models
         public int CountOfCards { get; set; }
         [Column("PersonId")]
         public string PersonId { get; set; }
-        public Set(string name, int count, string PersId)
+        public Set(string Name, int CountOfCards, string PersonId)
         {
-            Name = name;
-            CountOfCards = count;
-            PersonId = PersId;
+            this.Name = Name;
+            this.CountOfCards = CountOfCards;
+            this.PersonId = PersonId;
         }
-
-
     }
 }

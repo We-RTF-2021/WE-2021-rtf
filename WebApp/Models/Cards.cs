@@ -25,13 +25,13 @@ namespace WebApp.Models
         [Column("SetID")]
         public int SetID { get; set; }
 
-        public Card(string en, string ru, int setId)
+        public Card(string EN_Name, string RU_Name, int SetID)
         {
-            EN_Name = en;
-            RU_Name = ru;
+            this.EN_Name = EN_Name;
+            this.RU_Name = RU_Name;
             DaysForNext = 1;
             Status = 1;
-            SetID = setId;
+            this.SetID = SetID;
         }
     }
 }

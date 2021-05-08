@@ -66,7 +66,15 @@ export class NewCollection extends Component {
     }
 
     confirm() {
-        
+        var request = new XMLHttpRequest();
+        function reqReadyStateChange() {
+            if (request.readyState == 4 && request.status == 200)
+                document.getElementById("confirmButton").innerHTML = "Отправилось!";
+        }
+        request.open("POST", "http://localhost:5001/Set");
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.onreadystatechange = reqReadyStateChange;
+        request.send({ nameOfSet: this.state.setName, words: this.state.ids });
     }
 
     render() {
@@ -106,7 +114,7 @@ export class NewCollection extends Component {
                     )
                 }
                 <br />
-                <NavLink id="confirmButton" to="/" className="all-button plus-minus" onClick={this.confirm}><b>Готово</b></NavLink>
+                <a id="confirmButton" className="all-button plus-minus" onClick={this.confirm}><b>Готово</b></a>
             </div>
         );
     }
