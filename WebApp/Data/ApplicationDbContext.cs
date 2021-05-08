@@ -17,5 +17,7 @@ namespace WebApp.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+        public DbSet<Card> Cards { get; set; }
+        public DbSet<Set> Sets { get; set; }
     }
 }
