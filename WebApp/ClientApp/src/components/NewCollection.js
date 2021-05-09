@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import "./NewCollection.css";
 import { NavLink } from 'react-router-dom';
+import authService from './api-authorization/AuthorizeService'
 
 export class NewCollection extends Component {
     static displayName = NewCollection.name;
@@ -17,8 +18,7 @@ export class NewCollection extends Component {
 
         this.state = {
             setName: "",
-            description: "",
-            ids: [{
+            words: [{
                 russian: "",
                 english: ""
             }]
@@ -28,14 +28,14 @@ export class NewCollection extends Component {
     deleteWord(bId) {
         console.log(bId);
         this.setState((state) => {
-            state.ids.splice(bId, 1);
+            state.words.splice(bId, 1);
             return state;
         });
     }
     addWord(e) {
         e.preventDefault();
         this.setState((state) => {
-            state.ids.push({
+            state.words.push({
                 russian: "",
                 english: ""
             });
@@ -46,14 +46,14 @@ export class NewCollection extends Component {
     changeRussian(elem) {
         let id = elem.id.substring(1);
         this.setState((state) => {
-            state.ids[id].russian = elem.value;
+            state.words[id].russian = elem.value;
             return state;
         });
     }
     changeEnglish(elem) {
         let id = elem.id.substring(1);
         this.setState((state) => {
-            state.ids[id].english = elem.value;
+            state.words[id].english = elem.value;
             return state;
         });
     }
@@ -65,16 +65,36 @@ export class NewCollection extends Component {
         this.setState({ description: elem.value });
     }
 
-    confirm() {
-        var request = new XMLHttpRequest();
-        function reqReadyStateChange() {
-            if (request.readyState == 4 && request.status == 200)
-                document.getElementById("confirmButton").innerHTML = "Отправилось!";
-        }
-        request.open("POST", "http://localhost:5001/Set");
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.onreadystatechange = reqReadyStateChange;
-        request.send({ nameOfSet: this.state.setName, words: this.state.ids });
+    // confirm() {
+    //     // const token = authService.getAccessToken();
+    //     // var request = new XMLHttpRequest();
+    //     // function reqReadyStateChange() {
+    //     //     if (request.readyState == 4 && request.status == 200)
+    //     //         document.getElementById("confirmButton").innerHTML = "Отправилось!";
+    //     // }
+    //     // request.open("POST", "set");
+    //     // request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    //     // request.setRequestHeader('Authorization', `Bearer ${token}`);
+    //     // request.onreadystatechange = reqReadyStateChange;
+    //     // request.send({ nameOfSet: this.state.setName, words: this.state.ids });
+
+    // }
+    async confirm() {
+        const token = await authService.getAccessToken();
+        // let f = !token ? {
+        //     'Content-Type': 'application/json; charset=UTF-8'
+        // } : {
+        //     'Authorization': `${token}`, 'Content-Type': 'application/json; charset=UTF-8'
+        // };
+        let c = JSON.stringify(this.state);
+        let response = await fetch('set', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: "same-origin",
+            headers: { 'Content-Type': 'application/json; charset=UTF-8', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify(this.state)
+        });
     }
 
     render() {
@@ -92,9 +112,9 @@ export class NewCollection extends Component {
                 </label>
 
                 {
-                    this.state.ids.map((item, index) => {
+                    this.state.words.map((item, index) => {
                         let id = index + 0;
-                        return id === this.state.ids.length - 1 ?
+                        return id === this.state.words.length - 1 ?
                             (<Fragment key={id}>
                                 <div className="newWord">
                                     <input type="text" className="left-russian" id={"r" + id} placeholder="Слово на русском" value={item.russian} onChange={(e) => this.changeRussian(e.target)} />
@@ -105,16 +125,16 @@ export class NewCollection extends Component {
                             :
                             (<Fragment key={id}>
                                 <div className="newWord">
-                                    <input type="text" className="left-russian" id={"r" + id} placeholder="Слово на русском" value={item.russian} onChange={(e) => this.changeRussian(e.target)}/>
+                                    <input type="text" className="left-russian" id={"r" + id} placeholder="Слово на русском" value={item.russian} onChange={(e) => this.changeRussian(e.target)} />
                                     <input type="text" id={"e" + id} className="right-english" placeholder="Перевод на английском" value={item.english} onChange={(e) => this.changeEnglish(e.target)} />
                                     <a id={"b" + id} className="all-button plus-minus" onClick={() => this.deleteWord(id)}>Удалить</a>
                                 </div>
                             </Fragment>);
-                        }
+                    }
                     )
                 }
                 <br />
-                <a id="confirmButton" className="all-button plus-minus" onClick={this.confirm}><b>Готово</b></a>
+                <NavLink id="confirmButton" to="/" className="all-button plus-minus" onClick={this.confirm}><b>Готово</b></NavLink>
             </div>
         );
     }

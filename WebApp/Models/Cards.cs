@@ -20,7 +20,7 @@ namespace WebApp.Models
         public string RU_Name { get; set; }
         [Column("DaysForNext")]
         public int DaysForNext { get; set; }
-        [Column("Stutus")]
+        [Column("Status")]
         public int Status { get; set; }
         [Column("SetID")]
         public int SetID { get; set; }
@@ -30,7 +30,7 @@ namespace WebApp.Models
             this.EN_Name = EN_Name;
             this.RU_Name = RU_Name;
             DaysForNext = 1;
-            Status = 1;
+            Status = 0;
             this.SetID = SetID;
         }
     }

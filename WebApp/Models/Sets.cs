@@ -19,11 +19,14 @@ namespace WebApp.Models
         public int CountOfCards { get; set; }
         [Column("PersonId")]
         public string PersonId { get; set; }
+        [NotMapped]
+        public double[] progress { get; set; }
         public Set(string Name, int CountOfCards, string PersonId)
         {
             this.Name = Name;
             this.CountOfCards = CountOfCards;
             this.PersonId = PersonId;
+            progress = new double[3];
         }
     }
 }

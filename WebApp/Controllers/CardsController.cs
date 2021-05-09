@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -27,16 +28,17 @@ namespace WebApp.Controllers
             db = d;
         }
         [HttpGet]
-        [HttpHead("{setId}")]
-        public IEnumerable<Card> Get([FromHeader] int setId)
+        public IEnumerable<Card> Get()
         {
-            var cards = db.Cards.Where(e => e.SetID == setId);
+            //int.Parse(this.HttpContext.Request.Headers["Authorization"][0].Split(' ')[1]);
+            var s = int.Parse(HttpContext.Request.QueryString.Value.Split('=')[1]);
+            var cards = db.Cards.Where(e => e.SetID == s);
             foreach (var card in cards)
             {
-                card.DaysForNext--;
+                card.DaysForNext = card.DaysForNext == 0 ? card.DaysForNext : card.DaysForNext - 1;
             }
             db.SaveChanges();
-            cards = db.Cards.Where(e => e.SetID == setId && e.DaysForNext == 0);
+            cards = db.Cards.Where(e => e.SetID == s && e.DaysForNext == 0);
             return cards;
         }
 
@@ -54,12 +56,12 @@ namespace WebApp.Controllers
                     {
                         if (d.isTrue)
                         {
-                            card.Status = card.Status < 3 ? card.Status++ : card.Status;
+                            card.Status = card.Status < 3 ? card.Status + 1 : card.Status;
                             card.DaysForNext = dict[card.Status];
                         }
                         else
                         {
-                            card.Status = card.Status > 0 ? card.Status-- : card.Status;
+                            card.Status = card.Status > 0 ? card.Status - 1 : card.Status;
                             card.DaysForNext = dict[card.Status];
                         }
                     }

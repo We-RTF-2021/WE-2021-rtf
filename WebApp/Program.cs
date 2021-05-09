@@ -15,8 +15,6 @@ namespace WebApp
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            //CreateTables.CreateAllTables();
-            CreateTables.InsertAllTables();
             host.PrepareDB();
             host.Run();
         }

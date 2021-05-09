@@ -1,38 +1,30 @@
 import React, { Component } from 'react';
 import "./CheckCard.css"
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import authService from './api-authorization/AuthorizeService'
 
 export class CheckCard extends Component {
     constructor(props) {
         super(props);
 
         this.correct = this.correct.bind(this);
+        this.confirm = this.confirm.bind(this);
         this.incorrect = this.incorrect.bind(this);
 
-        this.state = { id: 0, numberСorrectWords: 0 };
+        this.state = { id: 0, numberСorrectWords: 0, collection: [], loading: true };
     }
 
-    collection = [
-        {
-            En_name: "Home",
-            Ru_name: "Дом",
-            countOfTrue: 1,
+    cardsCorrect = [];
 
-        },
-        {
-            En_name: "Big",
-            Ru_name: "Большой",
-            countOfTrue: 3,
-        },
-        {
-            En_name: "Сat",
-            Ru_name: "Кошка",
-            countOfTrue: 2,
-        }
-    ];
+    componentDidMount() {
+        if (this.props.location.propsSearch)
+            this.getData();
+    }
+
 
     correct() {
         this.setState((state) => {
+            this.cardsCorrect.push({ cardId: state.collection[state.id].id, isTrue: true });
             state.id++;
             state.numberСorrectWords++;
             return state;
@@ -41,23 +33,51 @@ export class CheckCard extends Component {
 
     incorrect() {
         this.setState((state) => {
+            this.cardsCorrect.push({ cardId: state.id, isTrue: false });
             state.id++;
             return state;
         });
     }
+    async getData() {
 
+        const token = await authService.getAccessToken();
+        const response = await fetch(`card?setId=${this.props.location.propsSearch}`, {
+            headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await response.json();
+        this.setState({ collection: data, loading: false });
+
+    }
+    async confirm() {
+        let result = { setId: this.props.location.propsSearch, cardIds: this.cardsCorrect }
+        const token = await authService.getAccessToken();
+        let c = JSON.stringify(this.state);
+        let response = await fetch('card', {
+            method: 'PUT',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: "same-origin",
+            headers: { 'Content-Type': 'application/json; charset=UTF-8', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify(result)
+        });
+    }
 
     // TODO: вообще прикольно было бы сделать анимацию передвижения карточек
     render() {
-        return (
-            <div className="card-box">
-                {
-                    this.state.id !== this.collection.length ?
-                        <CommonCardTest key={this.state.id} english={this.collection[this.state.id].En_name} russian={this.collection[this.state.id].Ru_name} correct={this.correct} incorrect={this.incorrect} />
-                        :
-                        <Finish correct={this.state.numberСorrectWords} total={this.collection.length} />
-                }
-            </div>
+        if (!this.props.location.propsSearch)
+            return <Redirect to="/check" />;
+        let contents = this.state.loading
+            ? <p><em>Loading...</em></p>
+            :
+            this.state.id !== this.state.collection.length ?
+                <CommonCardTest key={this.state.id} english={this.state.collection[this.state.id].eN_Name} russian={this.state.collection[this.state.id].rU_Name} correct={this.correct} incorrect={this.incorrect} />
+                :
+                <Finish correct={this.state.numberСorrectWords} method={this.confirm} total={this.state.collection.length} />
+
+
+        return (<div className="card-box">
+            {contents}
+        </div>
         );
     }
 }
@@ -121,7 +141,7 @@ class Finish extends Component {
                     <div className="card">
                         <p>{this.props.correct} из {this.props.total}</p>
                         <div className="answer">
-                            <Link className="all-button answer-button" to='/check'>К другим наборам</Link>
+                            <Link className="all-button answer-button" onClick={this.props.method} to='/check'>К другим наборам</Link>
                         </div>
                     </div>
                 </div>

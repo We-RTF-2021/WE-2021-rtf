@@ -27,23 +27,32 @@ namespace WebApp.Controllers
             db = d;
         }
         [HttpGet]
-        [HttpHead("{token}")]
-        public DbSet<Set> Get([FromHeader] string token)
+        public IEnumerable<Set> Get()
         {
-            var userSets = db.Sets.Where(e => e.PersonId == token || e.PersonId == null);
-            return db.Sets;
+            var t = this.HttpContext.Request.Headers["Authorization"][0].Split(' ')[1];
+            var userSets = db.Sets.Where(e => e.PersonId == t || e.PersonId == null);
+            foreach (var set in userSets)
+            {
+                var count = set.CountOfCards;
+                var card = db.Cards.Where(e => e.SetID == set.ID);
+                set.progress[0] = (double)(card.Where(e => e.Status == 0).Count()) / (double)count * 100;
+                set.progress[2] = (double)(card.Where(e => e.Status == 3).Count()) / (double)count * 100;
+                set.progress[1] = 100 - set.progress[0] - set.progress[2];
+            }
+            return userSets;
         }
 
         [HttpPost]
         [Produces("application/json", "application/xml")]
-        [HttpHead("{token}")]
-        public void Post([FromHeader] string token, [FromBody] SetWithWords data)
+        public void Post([FromBody] SetWithWords data)
         {
-            var set = new Set(data.nameOfSet, data.words.Length, token);
+            var token = this.HttpContext.Request.Headers["Authorization"][0].Split(' ')[1];
+            var set = new Set(data.setName, data.words.Length, token);
             db.Sets.Add(set);
+            db.SaveChanges();
             foreach (var card in data.words)
             {
-                var newCard = new Card(card.english, card.russian, db.Sets.Last().ID);
+                var newCard = new Card(card.english, card.russian, db.Sets.Count());
                 db.Cards.Add(newCard);
             }
             db.SaveChanges();
@@ -51,7 +60,7 @@ namespace WebApp.Controllers
 
         public class SetWithWords
         {
-            public string nameOfSet { set; get; }
+            public string setName { set; get; }
             public Word[] words { set; get; }
         }
 
