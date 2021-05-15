@@ -30,15 +30,17 @@ namespace WebApp.Controllers
         [HttpGet]
         public IEnumerable<Card> Get()
         {
-            //int.Parse(this.HttpContext.Request.Headers["Authorization"][0].Split(' ')[1]);
-            var s = int.Parse(HttpContext.Request.QueryString.Value.Split('=')[1]);
-            var cards = db.Cards.Where(e => e.SetID == s);
-            foreach (var card in cards)
-            {
-                card.DaysForNext = card.DaysForNext == 0 ? card.DaysForNext : card.DaysForNext - 1;
-            }
-            db.SaveChanges();
-            cards = db.Cards.Where(e => e.SetID == s && e.DaysForNext == 0);
+            var s = HttpContext.Request.QueryString.Value.Split('=', '&');
+            var userId = s[1];
+            var setId = s[3];
+            var cardIds = db.Progress.Where(e => e.SetID.ToString() == setId && e.PersonName == userId && e.DaysForNext == 1).Select(e => e.CardId).ToList();
+            var cards = db.Cards.Where(e => cardIds.IndexOf(e.CardID) != -1);
+            // foreach (var card in cards)
+            // {
+            //     card. = card.DaysForNext == 0 ? card.DaysForNext : card.DaysForNext - 1;
+            // }
+            // db.SaveChanges();
+            // cards = db.Cards.Where(e => e.SetID.ToString() == s);
             return cards;
         }
 
@@ -46,25 +48,22 @@ namespace WebApp.Controllers
         [Produces("application/json", "application/xml")]
         public void Put([FromBody] DD data)
         {
+            var s = HttpContext.Request.QueryString.Value.Split('=', '&');
+            var userId = s[1];
+            var setId = s[3];
             var dict = new Dictionary<int, int>(4) { [0] = 1, [1] = 3, [2] = 5, [3] = 7 };
-            var cards = db.Cards.Where(e => e.SetID == data.setId && e.DaysForNext == 0);
-            foreach (var card in cards)
+            foreach (var card in data.cardIds)
             {
-                foreach (var d in data.cardIds)
+                var c = db.Progress.Where(e => e.CardId == card.cardId).First();
+                if (card.isTrue)
                 {
-                    if (card.ID == d.cardId)
-                    {
-                        if (d.isTrue)
-                        {
-                            card.Status = card.Status < 3 ? card.Status + 1 : card.Status;
-                            card.DaysForNext = dict[card.Status];
-                        }
-                        else
-                        {
-                            card.Status = card.Status > 0 ? card.Status - 1 : card.Status;
-                            card.DaysForNext = dict[card.Status];
-                        }
-                    }
+                    c.Status = c.Status < 3 ? c.Status + 1 : c.Status;
+                    c.DaysForNext = dict[c.Status];
+                }
+                else
+                {
+                    c.Status = c.Status > 0 ? c.Status - 1 : c.Status;
+                    c.DaysForNext = dict[c.Status];
                 }
             }
             db.SaveChanges();
@@ -79,9 +78,8 @@ namespace WebApp.Controllers
 
         public class CardIds
         {
-            public int cardId { get; set; }
+            public Guid cardId { get; set; }
             public bool isTrue { get; set; }
         }
     }
 }
-

@@ -8,51 +8,6 @@ namespace WebApp.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Set",
-                columns: table => new
-                {
-                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    CountOfCards = table.Column<int>(type: "INTEGER", nullable: false),
-                    // CardsId = table.Column<string>(type: "TEXT", nullable: false) 
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NameOfSet", x => x.Name);
-                });
-             migrationBuilder.CreateTable(
-                name: "Card",
-                columns: table => new
-                {
-                    EN_Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    RU_Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    DaysForNext = table.Column<int>(type: "INTEGER", nullable: false),
-                    SetName = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NameOfCard", x => new { x.EN_Name, x.RU_Name });
-                    table.ForeignKey(
-                        name: "FK_NameOfSet",
-                        column: x => x.SetName,
-                        principalTable: "Set",
-                        principalColumn: "Name",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-                migrationBuilder.CreateTable(
-                name: "Men",
-                columns: table => new
-                {
-                    MenId = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    //SetNames = table.Column<int>(type: "INTEGER", nullable: false),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MenId", x => x.MenId);
-                });
-                    
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {

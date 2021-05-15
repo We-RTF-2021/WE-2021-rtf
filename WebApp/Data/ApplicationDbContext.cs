@@ -19,5 +19,13 @@ namespace WebApp.Data
         }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Set> Sets { get; set; }
+        public DbSet<Progress> Progress { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<Progress>()
+                .HasKey(e => new { e.PersonName, e.CardId });
+        }
     }
 }

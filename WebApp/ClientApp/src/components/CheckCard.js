@@ -39,9 +39,10 @@ export class CheckCard extends Component {
         });
     }
     async getData() {
-
+        const id = await authService.getUser();
+        const s = id.id;
         const token = await authService.getAccessToken();
-        const response = await fetch(`card?setId=${this.props.location.propsSearch}`, {
+        const response = await fetch(`card?userId=${s}&setId=${this.props.location.propsSearch}`, {
             headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();
@@ -49,10 +50,11 @@ export class CheckCard extends Component {
 
     }
     async confirm() {
+        const id = await authService.getUser();
+        const s = id.id;
         let result = { setId: this.props.location.propsSearch, cardIds: this.cardsCorrect }
         const token = await authService.getAccessToken();
-        let c = JSON.stringify(this.state);
-        let response = await fetch('card', {
+        let response = await fetch(`card?userId=${s}&setId=${this.props.location.propsSearch}`, {
             method: 'PUT',
             mode: 'cors',
             cache: 'no-cache',

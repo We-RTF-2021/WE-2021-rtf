@@ -89,7 +89,9 @@ export class Check extends Component {
 
     async getData() {
         const token = await authService.getAccessToken();
-        const response = await fetch('set', {
+        const id = await authService.getUser();
+        const s = id.sub;
+        const response = await fetch(`set?userId=${s}`, {
             headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();

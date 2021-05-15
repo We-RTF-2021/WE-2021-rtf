@@ -29,12 +29,12 @@ namespace WebApp.Controllers
         [HttpGet]
         public IEnumerable<Set> Get()
         {
-            var t = this.HttpContext.Request.Headers["Authorization"][0].Split(' ')[1];
-            var userSets = db.Sets.Where(e => e.PersonId == t || e.PersonId == null);
+            var userId = HttpContext.Request.QueryString.Value.Split('=')[1];
+            var userSets = db.Sets.Where(e => e.PersonId == userId || e.PersonId == null);
             foreach (var set in userSets)
             {
                 var count = set.CountOfCards;
-                var card = db.Cards.Where(e => e.SetID == set.ID);
+                var card = db.Progress.Where(e => e.SetID == set.SetID && e.PersonName == userId);
                 set.progress[0] = (double)(card.Where(e => e.Status == 0).Count()) / (double)count * 100;
                 set.progress[2] = (double)(card.Where(e => e.Status == 3).Count()) / (double)count * 100;
                 set.progress[1] = 100 - set.progress[0] - set.progress[2];
@@ -44,27 +44,27 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [Produces("application/json", "application/xml")]
-        public void Post([FromBody] SetWithWords data)
+        public void Post([FromBody] SetToCreateDto data)
         {
-            var token = this.HttpContext.Request.Headers["Authorization"][0].Split(' ')[1];
-            var set = new Set(data.setName, data.words.Length, token);
+            var userId = HttpContext.Request.QueryString.Value.Split('=')[1];
+            var set = new Set(data.setName, data.words.Length, userId);
             db.Sets.Add(set);
-            db.SaveChanges();
             foreach (var card in data.words)
             {
-                var newCard = new Card(card.english, card.russian, db.Sets.Count());
+                var newCard = new Card(card.english, card.russian, set.SetID);
                 db.Cards.Add(newCard);
             }
+
             db.SaveChanges();
         }
 
-        public class SetWithWords
+        public class SetToCreateDto
         {
             public string setName { set; get; }
-            public Word[] words { set; get; }
+            public CardToCreateDto[] words { set; get; }
         }
 
-        public class Word
+        public class CardToCreateDto
         {
             public string russian { set; get; }
             public string english { set; get; }

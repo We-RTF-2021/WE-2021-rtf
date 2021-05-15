@@ -9,28 +9,26 @@ using System.Threading.Tasks;
 
 namespace WebApp.Models
 {
-    [Table("Cards")]
     public class Card
     {
         [Key]
-        public int ID { get; set; }
-        [Column("EN_Name")]
+        public Guid CardID { get; set; }
+        [Required]
         public string EN_Name { get; set; }
-        [Column("RU_Name")]
+        [Required]
         public string RU_Name { get; set; }
-        [Column("DaysForNext")]
-        public int DaysForNext { get; set; }
-        [Column("Status")]
-        public int Status { get; set; }
-        [Column("SetID")]
-        public int SetID { get; set; }
 
-        public Card(string EN_Name, string RU_Name, int SetID)
+        [Required]
+        public Guid SetID { get; set; }
+        [ForeignKey("SetID")]
+        public Set Set { get; set; }
+
+
+        public Card(string EN_Name, string RU_Name, Guid SetID)
         {
+            CardID = Guid.NewGuid();
             this.EN_Name = EN_Name;
             this.RU_Name = RU_Name;
-            DaysForNext = 1;
-            Status = 0;
             this.SetID = SetID;
         }
     }
