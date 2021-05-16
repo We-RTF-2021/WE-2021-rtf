@@ -21,9 +21,10 @@ namespace WebApp.Models
         public Card Card { get; set; }
 
         [Required]
-        public int DaysForNext { get; set; }
-        [Required]
         public int Status { get; set; }
+        [Required]
+        public int DaysForNext { get; set; }
+
         [Required]
         public Guid SetID { get; set; }
         [ForeignKey("SetID")]
@@ -32,7 +33,6 @@ namespace WebApp.Models
         {
             this.PersonName = PersonName;
             this.CardId = CardId;
-            DaysForNext = 1;
             Status = 0;
             this.SetID = SetID;
         }

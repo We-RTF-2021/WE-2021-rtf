@@ -70,12 +70,12 @@ namespace WebApp.Controllers
                 if (card.isTrue)
                 {
                     c.Status = c.Status < 3 ? c.Status + 1 : c.Status;
-                    c.DaysForNext = dict[c.Status];
+                    //c.DaysForNext = dict[c.Status];
                 }
                 else
                 {
                     c.Status = c.Status > 0 ? c.Status - 1 : c.Status;
-                    c.DaysForNext = dict[c.Status];
+                    //c.DaysForNext = dict[c.Status];
                 }
             }
             db.SaveChanges();

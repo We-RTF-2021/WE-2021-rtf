@@ -54,7 +54,7 @@ namespace WebApp.Data
                 new Card("Lounger", "Шезлонг", sets[0].SetID),
                 new Card("Sea", "Море", sets[0].SetID),
                 new Card("Hotel", "Отель", sets[0].SetID),
-                new Card("Luggage", "Бараж", sets[0].SetID),
+                new Card("Luggage", "Багаж", sets[0].SetID),
                 new Card("Pool", "Бассейн", sets[0].SetID),
                 new Card("Excursion", "Экскурсия", sets[0].SetID),
                 new Card("Sand", "Песок", sets[0].SetID),
