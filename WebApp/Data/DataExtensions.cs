@@ -51,13 +51,59 @@ namespace WebApp.Data
 
             var cards = new[]{
                 new Card("Beach", "Пляж", sets[0].SetID),
+                new Card("Lounger", "Шезлонг", sets[0].SetID),
+                new Card("Sea", "Море", sets[0].SetID),
+                new Card("Hotel", "Отель", sets[0].SetID),
+                new Card("Luggage", "Бараж", sets[0].SetID),
+                new Card("Pool", "Бассейн", sets[0].SetID),
+                new Card("Excursion", "Экскурсия", sets[0].SetID),
+                new Card("Sand", "Песок", sets[0].SetID),
+                new Card("Hotel room", "Номер", sets[0].SetID),
+                new Card("Swimsuit", "Купальник", sets[0].SetID),
+                new Card("Suntan cream", "Крем для загара", sets[0].SetID),
+                new Card("Wawes", "Волны", sets[0].SetID),
+                new Card("Suitcase", "Чемодан", sets[0].SetID),
+                new Card("Plane", "Самолет", sets[0].SetID),
+                new Card("Ticket", "Билет", sets[0].SetID),
+
+                new Card("Apple", "Яблоко", sets[1].SetID),
+                new Card("Banana", "Банан", sets[1].SetID),
+                new Card("Pear", "Груша", sets[1].SetID),
+                new Card("Qiwi", "Киви", sets[1].SetID),
+                new Card("Orange", "Апельсин", sets[1].SetID),
+                new Card("Tomato", "Помидор", sets[1].SetID),
+                new Card("Cucumber", "Огурец", sets[1].SetID),
+                new Card("Melon", "Дыня", sets[1].SetID),
+                new Card("Watermelon", "Арбуз", sets[1].SetID),
+                new Card("Beet", "Свекла", sets[1].SetID),
+                new Card("Cabbage", "Капуста", sets[1].SetID),
+                new Card("Carrot", "Морковь", sets[1].SetID),
+                new Card("Grape", "Виноград", sets[1].SetID),
+                new Card("Cherry", "Вишня", sets[1].SetID),
+                new Card("Strawberry", "Клубника", sets[1].SetID),
+
+                new Card("Tram", "Трамвай", sets[2].SetID),
+                new Card("Bus", "Автобус", sets[2].SetID),
+                new Card("Truck", "Грузовик", sets[2].SetID),
+                new Card("Trolleybus", "Троллейбус", sets[2].SetID),
+                new Card("Train", "Поезд", sets[2].SetID),
+                new Card("Motor ship", "Теплоход", sets[2].SetID),
+                new Card("Bike", "Байк", sets[2].SetID),
+                new Card("Bicycle", "Велосипед", sets[2].SetID),
+                new Card("Cart", "Телега", sets[2].SetID),
+                new Card("Speedboat", "Катер", sets[2].SetID),
+                new Card("Helicopter", "Вертолет", sets[2].SetID),
+                new Card("Car", "Машина", sets[2].SetID),
+                new Card("Plane", "Самолет", sets[2].SetID),
+                new Card("Ship", "Корабль", sets[2].SetID),
+                new Card("Boat", "Лодка", sets[2].SetID),
             };
             var progress = new List<Progress>();
             foreach (var user in dbContext.Users)
             {
                 foreach (var card in cards)
                 {
-                    progress.Add(new Progress(user.Id, card.CardID, 1, card.SetID));
+                    progress.Add(new Progress(user.Id, card.CardID, card.SetID));
                 }
             }
 

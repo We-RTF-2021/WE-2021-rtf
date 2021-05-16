@@ -15,62 +15,6 @@ export class Check extends Component {
     componentDidMount() {
         this.getData();
     }
-    // collection = [
-    //     {
-    //         name: "Путешествие",
-    //         countWord: 10,
-    //         progress: { know: 0, study: 100, notKnow: 0 }
-    //     },
-    //     {
-    //         name: "Транспорт",
-    //         countWord: 10,
-    //         progress: { know: 10, study: 30, notKnow: 60 }
-    //     },
-    //     {
-    //         name: "Транспорт",
-    //         countWord: 10,
-    //         progress: { know: 10, study: 30, notKnow: 60 }
-    //     },
-    //     {
-    //         name: "Транспорт",
-    //         countWord: 10,
-    //         progress: { know: 10, study: 30, notKnow: 60 }
-    //     },
-    //     {
-    //         name: "Транспорт",
-    //         countWord: 10,
-    //         progress: { know: 10, study: 30, notKnow: 60 }
-    //     },
-    //     {
-    //         name: "Транспорт",
-    //         countWord: 10,
-    //         progress: { know: 10, study: 30, notKnow: 60 }
-    //     },
-    //     {
-    //         name: "Транспорт",
-    //         countWord: 10,
-    //         progress: { know: 10, study: 30, notKnow: 60 }
-    //     },
-    //     {
-    //         name: "Транспорт",
-    //         countWord: 10,
-    //         progress: { know: 10, study: 30, notKnow: 60 }
-    //     },
-    //     {
-    //         name: "Транспорт",
-    //         countWord: 10,
-    //         progress: { know: 10, study: 30, notKnow: 60 }
-    //     },
-    //     {
-    //         name: "Транспорт",
-    //         countWord: 10,
-    //         progress: { know: 10, study: 30, notKnow: 60 }
-    //     },
-    //     {
-    //         name: "Фрукты и овощи",
-    //         countWord: 10,
-    //         progress: { know: 50, study: 30, notKnow: 20 }
-    //     }];
 
     getCollection() {
         const result = [];
@@ -81,7 +25,7 @@ export class Check extends Component {
                     <p><b>{e.name}</b></p>
                     <p>{e.countOfCards} слов</p>
                     <div className="progress" style={{ background: grad }}></div>
-                    <Link className="all-button collection-button" to={{ pathname: "/checkCard", propsSearch: e.id }}>Проверка</Link >
+                    <Link className="all-button collection-button" to={{ pathname: "/checkCard", propsSearch: e.setID }}>Проверка</Link >
                 </div>);
         }
         return <div className="collections">{result}</div>;
@@ -90,8 +34,7 @@ export class Check extends Component {
     async getData() {
         const token = await authService.getAccessToken();
         const id = await authService.getUser();
-        const s = id.sub;
-        const response = await fetch(`set?userId=${s}`, {
+        const response = await fetch(`set?userId=${id.sub}`, {
             headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();

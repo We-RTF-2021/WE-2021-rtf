@@ -28,33 +28,45 @@ namespace WebApp.Controllers
             db = d;
         }
         [HttpGet]
-        public IEnumerable<Card> Get()
+        public IEnumerable<ResultDTO> Get()
         {
             var s = HttpContext.Request.QueryString.Value.Split('=', '&');
             var userId = s[1];
             var setId = s[3];
-            var cardIds = db.Progress.Where(e => e.SetID.ToString() == setId && e.PersonName == userId && e.DaysForNext == 1).Select(e => e.CardId).ToList();
-            var cards = db.Cards.Where(e => cardIds.IndexOf(e.CardID) != -1);
+            var cardsIds = db.Progress.ToList().Where(e => e.SetID.ToString() == setId && e.PersonName == userId);// && e.DaysForNext == 1);
+            // && e.PersonName == userId && e.DaysForNext == 1)).ToList();
+            // var cards = db.Cards.Where(e => sdt.IndexOf(e.CardID) != -1);
             // foreach (var card in cards)
             // {
             //     card. = card.DaysForNext == 0 ? card.DaysForNext : card.DaysForNext - 1;
             // }
             // db.SaveChanges();
-            // cards = db.Cards.Where(e => e.SetID.ToString() == s);
-            return cards;
+            var result = new List<ResultDTO>();
+            foreach (var e in db.Cards)
+            {
+                foreach (var f in cardsIds)
+                    if (e.CardID == f.CardId)
+                    {
+                        result.Add(new ResultDTO() { status = f.Status, card = e });
+                    }
+            }
+            return result;
+        }
+
+        public class ResultDTO
+        {
+            public int status { get; set; }
+            public Card card { get; set; }
         }
 
         [HttpPut]
         [Produces("application/json", "application/xml")]
         public void Put([FromBody] DD data)
         {
-            var s = HttpContext.Request.QueryString.Value.Split('=', '&');
-            var userId = s[1];
-            var setId = s[3];
             var dict = new Dictionary<int, int>(4) { [0] = 1, [1] = 3, [2] = 5, [3] = 7 };
             foreach (var card in data.cardIds)
             {
-                var c = db.Progress.Where(e => e.CardId == card.cardId).First();
+                var c = db.Progress.Where(e => e.CardId == card.cardId && e.PersonName == data.userId).First();
                 if (card.isTrue)
                 {
                     c.Status = c.Status < 3 ? c.Status + 1 : c.Status;
@@ -71,7 +83,8 @@ namespace WebApp.Controllers
 
         public class DD
         {
-            public int setId { get; set; }
+            public Guid setId { get; set; }
+            public string userId { get; set; }
 
             public CardIds[] cardIds { get; set; }
         }

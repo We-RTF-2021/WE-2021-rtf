@@ -86,6 +86,7 @@ export class NewCollection extends Component {
         // } : {
         //     'Authorization': `${token}`, 'Content-Type': 'application/json; charset=UTF-8'
         // };
+        const id = await authService.getUser();
         let c = JSON.stringify(this.state);
         let response = await fetch('set', {
             method: 'POST',
@@ -93,7 +94,7 @@ export class NewCollection extends Component {
             cache: 'no-cache',
             credentials: "same-origin",
             headers: { 'Content-Type': 'application/json; charset=UTF-8', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify(this.state)
+            body: JSON.stringify({ userId: id.sub, set: this.state })
         });
     }
 

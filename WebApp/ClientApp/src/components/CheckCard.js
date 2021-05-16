@@ -23,8 +23,9 @@ export class CheckCard extends Component {
 
 
     correct() {
+        this.cardsCorrect.push({ cardId: this.state.collection[this.state.id].card.cardID, isTrue: true });
         this.setState((state) => {
-            this.cardsCorrect.push({ cardId: state.collection[state.id].id, isTrue: true });
+
             state.id++;
             state.numberСorrectWords++;
             return state;
@@ -32,17 +33,16 @@ export class CheckCard extends Component {
     }
 
     incorrect() {
+        this.cardsCorrect.push({ cardId: this.state.collection[this.state.id].card.cardID, isTrue: false });
         this.setState((state) => {
-            this.cardsCorrect.push({ cardId: state.id, isTrue: false });
             state.id++;
             return state;
         });
     }
     async getData() {
         const id = await authService.getUser();
-        const s = id.id;
         const token = await authService.getAccessToken();
-        const response = await fetch(`card?userId=${s}&setId=${this.props.location.propsSearch}`, {
+        const response = await fetch(`card?userId=${id.sub}&setId=${this.props.location.propsSearch}`, {
             headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();
@@ -51,10 +51,9 @@ export class CheckCard extends Component {
     }
     async confirm() {
         const id = await authService.getUser();
-        const s = id.id;
-        let result = { setId: this.props.location.propsSearch, cardIds: this.cardsCorrect }
+        let result = { userId: id.sub, setId: this.props.location.propsSearch, cardIds: this.cardsCorrect }
         const token = await authService.getAccessToken();
-        let response = await fetch(`card?userId=${s}&setId=${this.props.location.propsSearch}`, {
+        let response = await fetch(`card`, {
             method: 'PUT',
             mode: 'cors',
             cache: 'no-cache',
@@ -72,7 +71,7 @@ export class CheckCard extends Component {
             ? <p><em>Loading...</em></p>
             :
             this.state.id !== this.state.collection.length ?
-                <CommonCardTest key={this.state.id} english={this.state.collection[this.state.id].eN_Name} russian={this.state.collection[this.state.id].rU_Name} correct={this.correct} incorrect={this.incorrect} />
+                <CommonCardTest key={this.state.id} english={this.state.collection[this.state.id].card.eN_Name} russian={this.state.collection[this.state.id].card.rU_Name} correct={this.correct} incorrect={this.incorrect} />
                 :
                 <Finish correct={this.state.numberСorrectWords} method={this.confirm} total={this.state.collection.length} />
 

@@ -46,12 +46,13 @@ namespace WebApp.Controllers
         [Produces("application/json", "application/xml")]
         public void Post([FromBody] SetToCreateDto data)
         {
-            var userId = HttpContext.Request.QueryString.Value.Split('=')[1];
-            var set = new Set(data.setName, data.words.Length, userId);
+            var set = new Set(data.set.setName, data.set.words.Length, data.userId);
             db.Sets.Add(set);
-            foreach (var card in data.words)
+            foreach (var card in data.set.words)
             {
                 var newCard = new Card(card.english, card.russian, set.SetID);
+                var newProgr = new Progress(data.userId, newCard.CardID, set.SetID);
+                db.Progress.Add(newProgr);
                 db.Cards.Add(newCard);
             }
 
@@ -59,6 +60,12 @@ namespace WebApp.Controllers
         }
 
         public class SetToCreateDto
+        {
+            public string userId { set; get; }
+            public SetInfo set { set; get; }
+        }
+
+        public class SetInfo
         {
             public string setName { set; get; }
             public CardToCreateDto[] words { set; get; }

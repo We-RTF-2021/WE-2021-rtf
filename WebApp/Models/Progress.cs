@@ -28,7 +28,7 @@ namespace WebApp.Models
         public Guid SetID { get; set; }
         [ForeignKey("SetID")]
         public Set Set { get; set; }
-        public Progress(string PersonName, Guid CardId, int DaysForNext, Guid SetID)
+        public Progress(string PersonName, Guid CardId, Guid SetID)
         {
             this.PersonName = PersonName;
             this.CardId = CardId;
