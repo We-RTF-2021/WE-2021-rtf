@@ -334,7 +334,7 @@ class InputCardTest extends Component {
                                         <p>{this.props.english}</p> <br />
                                         <label htmlFor="translation">
                                             <p>Перевод:</p>
-                                            <input type="text" className="inp" name="translation" id="translation" placeholder="На русском" value={this.state.translation} onChange={(e) => this.changeTranslation(e.target)} />
+                                            <input type="text" autoComplete="off" className="inp" name="translation" id="translation" placeholder="На русском" value={this.state.translation} onChange={(e) => this.changeTranslation(e.target)} />
                                         </label>
                                         <a className="all-button answer-button" onClick={this.handleInput}>Проверить</a>
                                     </div>

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component, Fragment } from 'react';
 import "./NewCollection.css";
 import { NavLink } from 'react-router-dom';
@@ -33,29 +34,38 @@ export class NewCollection extends Component {
         });
     }
     addWord(e) {
-        e.preventDefault();
-        this.setState((state) => {
-            state.words.push({
-                russian: "",
-                english: ""
+        let lastWord = this.state.words[this.state.words.length - 1];
+        if (lastWord.russian !== "" && lastWord.english !== "") {
+            e.preventDefault();
+            this.setState((state) => {
+                state.words.push({
+                    russian: "",
+                    english: ""
+                });
+                return state;
             });
-            return state;
-        });
+        }
     }
 
     changeRussian(elem) {
-        let id = elem.id.substring(1);
-        this.setState((state) => {
-            state.words[id].russian = elem.value;
-            return state;
-        });
+        let s = elem.value.split('');
+        if (/[а-яА-Я]/.test(s[s.length - 1]) || s.length === 0) {
+            let id = elem.id.substring(1);
+            this.setState((state) => {
+                state.words[id].russian = elem.value;
+                return state;
+            });
+        }
     }
     changeEnglish(elem) {
-        let id = elem.id.substring(1);
-        this.setState((state) => {
-            state.words[id].english = elem.value;
-            return state;
-        });
+        let s = elem.value.split('');
+        if (/[a-zA-Z]/.test(s[s.length - 1]) || s.length === 0) {
+            let id = elem.id.substring(1);
+            this.setState((state) => {
+                state.words[id].english = elem.value;
+                return state;
+            });
+        }
     }
 
     changeSetName(elem) {
@@ -65,30 +75,10 @@ export class NewCollection extends Component {
         this.setState({ description: elem.value });
     }
 
-    // confirm() {
-    //     // const token = authService.getAccessToken();
-    //     // var request = new XMLHttpRequest();
-    //     // function reqReadyStateChange() {
-    //     //     if (request.readyState == 4 && request.status == 200)
-    //     //         document.getElementById("confirmButton").innerHTML = "Отправилось!";
-    //     // }
-    //     // request.open("POST", "set");
-    //     // request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    //     // request.setRequestHeader('Authorization', `Bearer ${token}`);
-    //     // request.onreadystatechange = reqReadyStateChange;
-    //     // request.send({ nameOfSet: this.state.setName, words: this.state.ids });
-
-    // }
     async confirm() {
         const token = await authService.getAccessToken();
-        // let f = !token ? {
-        //     'Content-Type': 'application/json; charset=UTF-8'
-        // } : {
-        //     'Authorization': `${token}`, 'Content-Type': 'application/json; charset=UTF-8'
-        // };
         const id = await authService.getUser();
-        let c = JSON.stringify(this.state);
-        let response = await fetch('set', {
+        await fetch('set', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -105,12 +95,12 @@ export class NewCollection extends Component {
                 {/* <h1>{this.props.sid}</h1> */}
                 <label htmlFor="Cards">
                     Название набора
-                <input type="text" className="inp" name="Cards" id="Cards" placeholder="Например, 30 самых важных слов" value={this.state.setName} onChange={(e) => this.changeSetName(e.target)} />
+                <input type="text" autoComplete="off" className="inp" name="Cards" id="Cards" placeholder="Например, 30 самых важных слов" value={this.state.setName} onChange={(e) => this.changeSetName(e.target)} />
                 </label>
-                <label htmlFor="Description">
+                {/* <label htmlFor="Description">
                     Описание
                     <textarea name="Description" className="txtar" id="Description" placeholder="Замотивируйте людей изучить ваш набор слов" value={this.state.description} onChange={(e) => this.changeDesc(e.target)} ></textarea>
-                </label>
+                </label> */}
 
                 {
                     this.state.words.map((item, index) => {
@@ -118,16 +108,16 @@ export class NewCollection extends Component {
                         return id === this.state.words.length - 1 ?
                             (<Fragment key={id}>
                                 <div className="newWord">
-                                    <input type="text" className="left-russian" id={"r" + id} placeholder="Слово на русском" value={item.russian} onChange={(e) => this.changeRussian(e.target)} />
-                                    <input type="text" id={"e" + id} className="right-english" placeholder="Перевод на английском" value={item.english} onChange={(e) => this.changeEnglish(e.target)} />
+                                    <input type="text" className="left-russian" autoComplete="off" id={"r" + id} placeholder="Слово на русском" value={item.russian} onChange={(e) => this.changeRussian(e.target)} />
+                                    <input type="text" id={"e" + id} className="right-english" autoComplete="off" placeholder="Перевод на английском" value={item.english} onChange={(e) => this.changeEnglish(e.target)} />
                                     <a id={"b" + id} className="all-button plus-minus" onClick={this.addWord}>Добавить</a>
                                 </div>
                             </Fragment>)
                             :
                             (<Fragment key={id}>
                                 <div className="newWord">
-                                    <input type="text" className="left-russian" id={"r" + id} placeholder="Слово на русском" value={item.russian} onChange={(e) => this.changeRussian(e.target)} />
-                                    <input type="text" id={"e" + id} className="right-english" placeholder="Перевод на английском" value={item.english} onChange={(e) => this.changeEnglish(e.target)} />
+                                    <input type="text" autoComplete="off" className="left-russian" id={"r" + id} placeholder="Слово на русском" value={item.russian} onChange={(e) => this.changeRussian(e.target)} />
+                                    <input type="text" autoComplete="off" id={"e" + id} className="right-english" placeholder="Перевод на английском" value={item.english} onChange={(e) => this.changeEnglish(e.target)} />
                                     <a id={"b" + id} className="all-button plus-minus" onClick={() => this.deleteWord(id)}>Удалить</a>
                                 </div>
                             </Fragment>);
