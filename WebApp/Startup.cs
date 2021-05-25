@@ -50,6 +50,9 @@ namespace WebApp
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            //Swagger
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +73,13 @@ namespace WebApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            //Swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cards API");
+            });
 
             app.UseRouting();
 

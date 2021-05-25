@@ -1,0 +1,34 @@
+﻿/* loader */
+.loaderContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.scaleContainer {
+    height: 80px;
+    display: flex;
+}
+
+.scale {
+    display: inline-block;
+    margin: auto 5px;
+    width: 5px;
+    height: 40px;
+    border-radius: 2px;
+    background-color: aquamarine;
+    transition: 1s;
+    opacity: 0;
+}
+
+.scaleAnim {
+    opacity: 1;
+    animation: scaleAnimation 2s infinite alternate;
+}
+
+@keyframes scaleAnimation {
+    50% {
+        background: darkviolet;
+        height: 60px;
+    }
+}

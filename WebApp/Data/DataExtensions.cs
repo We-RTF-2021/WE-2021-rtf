@@ -61,7 +61,7 @@ namespace WebApp.Data
                 new Card("Hotel room", "Номер", sets[0].SetID),
                 new Card("Swimsuit", "Купальник", sets[0].SetID),
                 new Card("Suntan cream", "Крем для загара", sets[0].SetID),
-                new Card("Wawes", "Волны", sets[0].SetID),
+                new Card("Waves", "Волны", sets[0].SetID),
                 new Card("Suitcase", "Чемодан", sets[0].SetID),
                 new Card("Plane", "Самолет", sets[0].SetID),
                 new Card("Ticket", "Билет", sets[0].SetID),

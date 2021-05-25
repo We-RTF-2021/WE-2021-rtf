@@ -5,46 +5,35 @@
     justify-content: center;
     height: 400px;
     width: 300px;
-    padding: 50px;
+    padding: 25px;
     font-family: "Tahoma";
-    font-size: 55px;
+    font-size: 45px;
     color: rgb(137, 137, 221);
     text-decoration: none;
     text-shadow: 0 -1px 2px rgba(0, 0, 0, .2);
     text-align: center;
     box-shadow: 0 1px rgba(255, 255, 255, .2) inset, 0 3px 5px rgba(0, 1, 6, .5), 0 0 1px 1px rgba(0, 1, 6, .2);
-    border-radius: 6px;
-    background: linear-gradient(rgb(60, 62, 60), rgb(41, 41, 46), rgb(60, 62, 60));
+    border-radius: 25px;
+    border: 10px solid rgb(22 105 130);
+    background-color: white;
 }
 
 .card-box {
-    margin-top: 10%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 10% auto;
     width: 1000px;
-    display: flex;
-    justify-content: center;
     position: relative;
 }
 
 .answer-button {
     font-size: 20px;
-    width: 45%;
-    padding: 5px;
-    margin: auto;
-}
-
-.back-ol {
-    margin-top: 30px;
-    font-size: 20px;
-    padding: 10px;
+    margin: auto 5px;
 }
 
 .answer {
     margin-top: 30px;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     text-align: center;
 }
 
@@ -61,15 +50,8 @@
     transform: rotateY(180deg);
 }
 
-.flip-container.hover#flipInside .flipper {
+#flipInside.hover .flipper {
     transform: rotateY(360deg);
-}
-
-.flip-container,
-.front,
-.back {
-    height: 400px;
-    width: 300px;
 }
 
 .flipper {
@@ -95,23 +77,15 @@
 }
 
 .left {
-    z-index: -100;
+    z-index: -10;
     position: absolute;
     left: 0;
 }
 
 .right {
-    z-index: -100;
+    z-index: -10;
     position: absolute;
     right: 0;
-}
-
-.white {
-    /*background: linear-gradient(rgb(255 255 255), rgb(182 255 0), rgb(255 0 0));*/
-}
-
-.wat {
-    transform: rotateY(180deg);
 }
 
 .wrong {
@@ -122,4 +96,67 @@
 .correct {
     color: greenyellow;
     font-size: 0.5em;
+}
+.red {
+    border-color: brown;
+}
+.green {
+    border-color: greenyellow;
+}
+.yellow {
+    border-color: yellow;
+}
+.gray {
+    border-color: gray;
+}
+
+/* Прикольная штука, но пока лень впихнуть */
+/*<div class="containerYN" >
+    <div class="left-bg" > LEFT</div >
+    <div class="right-bg" > RIGHT</div >
+</div >*/
+
+.containerYN {
+    position: relative;
+    background: #f1f1f1;
+    margin: 40px auto;
+    width: 80%;
+    height: 360px;
+}
+
+.left-bg, .right-bg {
+    text-align: center;
+    vertical-align: central;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    transition: .25s ease;
+}
+
+.left-bg {
+    background-color: #24800f;
+    left: 0;
+}
+
+.right-bg {
+    background-color: #5988ad;
+    background-position: right;
+    right: 0;
+}
+
+.left-bg:hover {
+    width: 60%;
+}
+
+.left-bg:hover + .right-bg {
+    width: 40%;
+}
+
+.right-bg:hover {
+    width: 60%;
+}
+
+.right-bg:hover + .left-bg {
+    width: 40%;
 }

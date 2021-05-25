@@ -19,12 +19,10 @@ namespace WebApp.Controllers
     {
 
         private readonly ApplicationDbContext db;
-        private readonly ILogger<WeatherForecastController> _logger;
 
-        public SetController(ILogger<WeatherForecastController> logger, ApplicationDbContext d)
+        public SetController(ApplicationDbContext db)
         {
-            _logger = logger;
-            db = d;
+            this.db = db;
         }
         [HttpGet]
         public IEnumerable<Set> Get()

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import "./CheckCard.css"
-import { Link, Redirect } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import authService from './api-authorization/AuthorizeService'
+import { Loader } from "./Loader.js"
 
 export class CheckCard extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ export class CheckCard extends Component {
         this.confirm = this.confirm.bind(this);
         this.incorrect = this.incorrect.bind(this);
 
-        this.state = { id: 0, numberСorrectWords: 0, collection: [], loading: true };
+        this.state = { id: 0, numberСorrectWords: 0, collection: [], loading: true, redirect: false };
     }
 
     cardsCorrect = [];
@@ -27,7 +28,6 @@ export class CheckCard extends Component {
             let i = 0;
             for (; i < this.cardsCorrect.length; i++)
                 if (this.cardsCorrect[i].cardId === state.collection[state.id].card.cardID) break;
-            //let newStatus = state.collection[state.id].status + 1;
             if (i === this.cardsCorrect.length) {
                 this.cardsCorrect.push({ cardId: state.collection[state.id].card.cardID, isTrue: true });
             }
@@ -65,13 +65,14 @@ export class CheckCard extends Component {
         for (let i = 0; i < initLen; i++) {
             this.mixArray(testTypes);
             data[i].testType = testTypes[0];
+            let card = data[i].card;
+            let status = data[i].status;
             if (data[i].status < 1)
-                data.push({ card: { rU_Name: data[i].card.rU_Name, eN_Name: data[i].card.eN_Name, cardID: data[i].card.cardID }, testType: testTypes[1] });
+                data.push({ card, status, testType: testTypes[1] });
             if (data[i].status < 2)
-                data.push({ card: { rU_Name: data[i].card.rU_Name, eN_Name: data[i].card.eN_Name, cardID: data[i].card.cardID }, testType: testTypes[2] });
+                data.push({ card, status, testType: testTypes[2] });
         }
         this.mixArray(data);
-
 
         this.setState({ collection: data, loading: false });
     }
@@ -92,28 +93,51 @@ export class CheckCard extends Component {
             headers: { 'Content-Type': 'application/json; charset=UTF-8', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify(result)
         });
+        this.setState({ redirect: true });
     }
 
-    // TODO: вообще прикольно было бы сделать анимацию передвижения карточек
+    getColorAccordingToStatus(status) {
+        switch (status) {
+            case 0:
+                return "red";
+            case 1:
+                return "yellow"
+            case 2:
+                return "yellow";
+            case 3:
+                return "green";
+            default:
+                return "gray";
+        }
+    }
+
     render() {
-        if (!this.props.location.propsSearch)
+        if (!this.props.location.propsSearch || this.state.redirect)
             return <Redirect to="/check" />;
-        let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
-            :
-            <>
+        let english, russian, color, contents, stat;
+        if (!this.state.loading) {
+            if (this.state.id !== this.state.collection.length) {
+                english = this.state.collection[this.state.id].card.eN_Name;
+                russian = this.state.collection[this.state.id].card.rU_Name;
+                stat = this.state.collection[this.state.id].status;
+                color = this.getColorAccordingToStatus(stat);
+            }
+            contents = (<>
                 { this.state.id != this.state.collection.length ? <div className="card right"></div> : <></>}
                 { this.state.id != 0 ? <div className="card left"></div> : <></>}
                 {
                     this.state.id !== this.state.collection.length ?
                         this.state.collection[this.state.id].testType == "common" ?
-                            <CommonCardTest key={this.state.id} english={this.state.collection[this.state.id].card.eN_Name} russian={this.state.collection[this.state.id].card.rU_Name} correct={this.correct} incorrect={this.incorrect} />
+                            <CommonCardTest key={this.state.id} english={english} russian={russian} color={" " + color} correct={this.correct} incorrect={this.incorrect} />
                             : this.state.collection[this.state.id].testType == "inverse" ?
-                                <CommonCardTest key={this.state.id} english={this.state.collection[this.state.id].card.rU_Name} russian={this.state.collection[this.state.id].card.eN_Name} correct={this.correct} incorrect={this.incorrect} />
-                                : <InputCardTest key={this.state.id} english={this.state.collection[this.state.id].card.eN_Name} russian={this.state.collection[this.state.id].card.rU_Name} correct={this.correct} incorrect={this.incorrect} />
+                                <CommonCardTest key={this.state.id} english={russian} russian={english} color={" " + color} correct={this.correct} incorrect={this.incorrect} />
+                                : <InputCardTest key={this.state.id} english={english} russian={russian} color={" " + color} correct={this.correct} incorrect={this.incorrect} />
                         : <Finish key={this.state.id} method={this.confirm} correct={this.state.numberСorrectWords} total={this.state.collection.length} />
                 }
-            </>
+            </>);
+        } else {
+            contents = <Loader/>;
+        }
         return (<div className="card-box">
             {contents}
         </div>
@@ -210,12 +234,12 @@ class CommonCardTest extends Component {
         return (
             <div id={"f" + this.props.key} id="flipOutside" className="flip-container">
                 <div className="flipper">
-                    <div className="front card white"></div>
+                    <div className="front card"></div>
                     <div className="back">
                         <div id={"flipInside"} className="flip-container">
                             <div className="flipper">
                                 <div className="back">
-                                    <div className="card">
+                                    <div className={"card " + this.props.color}>
                                         <p>{this.props.english}</p>
                                         <div className="answer">
                                             <a className="all-button answer-button" onClick={this.changeButtons1}>Знаю</a>
@@ -224,7 +248,7 @@ class CommonCardTest extends Component {
                                     </div>
                                 </div>
                                 <div className="front">
-                                    <div className="card">
+                                    <div className={"card " + this.props.color}>
                                         <p>{this.props.russian}</p>
                                         <div className="answer">
                                             <a id="b1" className="all-button answer-button" onClick={this.correctAnswer}></a>
@@ -325,26 +349,24 @@ class InputCardTest extends Component {
         return (
             <div id={"f" + this.props.key} id="flipOutside" className="flip-container">
                 <div className="flipper">
-                    <div className="front card white"></div>
+                    <div className="front card"></div>
                     <div className="back">
                         <div id={"flipInside"} className="flip-container">
                             <div className="flipper">
                                 <div className="back">
-                                    <div className="card">
-                                        <p>{this.props.english}</p> <br />
+                                    <div className={"card " + this.props.color}>
+                                        <p>{this.props.english}</p>
                                         <label htmlFor="translation">
                                             <p>Перевод:</p>
-                                            <input type="text" autoComplete="off" className="inp" name="translation" id="translation" placeholder="На русском" value={this.state.translation} onChange={(e) => this.changeTranslation(e.target)} />
+                                            <input type="text" autoComplete="off" name="translation" id="translation" placeholder="На русском" value={this.state.translation} onChange={(e) => this.changeTranslation(e.target)} />
                                         </label>
                                         <a className="all-button answer-button" onClick={this.handleInput}>Проверить</a>
                                     </div>
                                 </div>
                                 <div className="front">
-                                    <div className="card">
+                                    <div className={"card " + this.props.color}>
                                         <p>{this.props.russian}</p>
-                                        <div className="answer">
-                                            <p id="res"></p>
-                                        </div>
+                                        <p id="res"></p>
                                     </div>
                                 </div>
                             </div>
@@ -397,7 +419,7 @@ class Finish extends Component {
                                     <div className="card">
                                         <p>{this.props.correct} из {this.props.total}</p>
                                         <div className="answer">
-                                            <Link className="all-button answer-button" onClick={this.props.method} to='/check'>К другим наборам</Link>
+                                            <a className="all-button answer-button" onClick={this.props.method} to='/check'>К другим наборам</a>
                                         </div>
                                     </div>
                                 </div>

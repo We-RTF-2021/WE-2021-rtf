@@ -20,12 +20,10 @@ namespace WebApp.Controllers
     {
 
         private readonly ApplicationDbContext db;
-        private readonly ILogger<WeatherForecastController> _logger;
 
-        public CardController(ILogger<WeatherForecastController> logger, ApplicationDbContext d)
+        public CardController(ApplicationDbContext db)
         {
-            _logger = logger;
-            db = d;
+            this.db = db;
         }
         [HttpGet]
         public IEnumerable<ResultDTO> Get()
@@ -33,14 +31,7 @@ namespace WebApp.Controllers
             var s = HttpContext.Request.QueryString.Value.Split('=', '&');
             var userId = s[1];
             var setId = s[3];
-            var cardsIds = db.Progress.ToList().Where(e => e.SetID.ToString() == setId && e.PersonName == userId);// && e.DaysForNext == 1);
-            // && e.PersonName == userId && e.DaysForNext == 1)).ToList();
-            // var cards = db.Cards.Where(e => sdt.IndexOf(e.CardID) != -1);
-            // foreach (var card in cards)
-            // {
-            //     card. = card.DaysForNext == 0 ? card.DaysForNext : card.DaysForNext - 1;
-            // }
-            // db.SaveChanges();
+            var cardsIds = db.Progress.ToList().Where(e => e.SetID.ToString() == setId && e.PersonName == userId);
             var result = new List<ResultDTO>();
             foreach (var e in db.Cards)
             {
@@ -70,12 +61,10 @@ namespace WebApp.Controllers
                 if (card.isTrue)
                 {
                     c.Status = c.Status < 3 ? c.Status + 1 : c.Status;
-                    //c.DaysForNext = dict[c.Status];
                 }
                 else
                 {
                     c.Status = c.Status > 0 ? c.Status - 1 : c.Status;
-                    //c.DaysForNext = dict[c.Status];
                 }
             }
             db.SaveChanges();
