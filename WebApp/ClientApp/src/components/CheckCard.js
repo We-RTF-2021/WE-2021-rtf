@@ -136,7 +136,7 @@ export class CheckCard extends Component {
                 }
             </>);
         } else {
-            contents = <Loader/>;
+            contents = <Loader />;
         }
         return (<div className="card-box">
             {contents}
@@ -196,15 +196,20 @@ class CommonCardTest extends Component {
         let to = cardBoxWidth - width;
         let increment = (to - rightPos) * oneStepInMs / duration;
 
-        clearInterval(this.id);
+        clearInterval(this.timerId);
 
-        this.id = setInterval(() => {
+        this.timerId = setInterval(() => {
             rightPos += increment;
-            document.getElementById("flipOutside").style.right = rightPos + "px";
+            let flip = document.getElementById("flipOutside");
+            if (flip) flip.style.right = rightPos + "px";
+            else {
+                clearInterval(this.timerId);
+                return;
+            }
             if (rightPos == to) {
-                document.getElementById("flipOutside").style.right = to + "px";
+                flip.style.right = to + "px";
                 setTimeout(callback, 600);
-                clearInterval(this.id);
+                clearInterval(this.timerId);
             }
         }, oneStepInMs)
     }
@@ -218,14 +223,19 @@ class CommonCardTest extends Component {
         let to = (cardBoxWidth - width) / 2;
         let increment = (to - rightPos) * oneStepInMs / duration;
 
-        clearInterval(this.id);
+        clearInterval(this.timerId);
 
-        let id = setInterval(() => {
+        this.timerId = setInterval(() => {
             rightPos += increment;
-            document.getElementById("flipOutside").style.right = rightPos + "px";
+            let flip = document.getElementById("flipOutside");
+            if (flip) flip.style.right = rightPos + "px";
+            else {
+                clearInterval(this.timerId);
+                return;
+            }
             if (rightPos == to) {
-                document.getElementById("flipOutside").style.right = to + "px";
-                clearInterval(id);
+                flip.style.right = to + "px";
+                clearInterval(this.timerId);
             }
         }, oneStepInMs)
     }
@@ -307,15 +317,20 @@ class InputCardTest extends Component {
         let to = cardBoxWidth - width;
         let increment = (to - rightPos) * oneStepInMs / duration;
 
-        clearInterval(this.id);
+        clearInterval(this.timerId);
 
-        this.id = setInterval(() => {
+        this.timerId = setInterval(() => {
             rightPos += increment;
-            document.getElementById("flipOutside").style.right = rightPos + "px";
+            let flip = document.getElementById("flipOutside");
+            if (flip) flip.style.right = rightPos + "px";
+            else {
+                clearInterval(this.timerId);
+                return;
+            }
             if (rightPos == to) {
-                document.getElementById("flipOutside").style.right = to + "px";
+                flip.style.right = to + "px";
                 setTimeout(callback, 600);
-                clearInterval(this.id);
+                clearInterval(this.timerId);
             }
         }, oneStepInMs)
     }
@@ -329,14 +344,19 @@ class InputCardTest extends Component {
         let to = (cardBoxWidth - width) / 2;
         let increment = (to - rightPos) * oneStepInMs / duration;
 
-        clearInterval(this.id);
+        clearInterval(this.timerId);
 
-        let id = setInterval(() => {
+        this.timerId = setInterval(() => {
             rightPos += increment;
-            document.getElementById("flipOutside").style.right = rightPos + "px";
+            let flip = document.getElementById("flipOutside");
+            if (flip) flip.style.right = rightPos + "px";
+            else {
+                clearInterval(this.timerId);
+                return;
+            }
             if (rightPos == to) {
-                document.getElementById("flipOutside").style.right = to + "px";
-                clearInterval(id);
+                flip.style.right = to + "px";
+                clearInterval(this.timerId);
             }
         }, oneStepInMs)
     }
