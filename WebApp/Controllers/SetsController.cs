@@ -44,9 +44,9 @@ namespace WebApp.Controllers
                 }
                 return userSets;
             }
-            catch
+            catch (Exception ex)
             {
-                return new Set[0] { };
+                return new Set[1] { new Set(Name: ex.Message, 0, "123") };
             }
         }
 
