@@ -27,17 +27,24 @@ namespace WebApp.Controllers
         [HttpGet]
         public IEnumerable<Set> Get()
         {
-            var userId = HttpContext.Request.QueryString.Value.Split('=')[1];
-            var userSets = db.Sets.Where(e => e.PersonId == userId || e.PersonId == null);
-            foreach (var set in userSets)
+            try
             {
-                var count = set.CountOfCards;
-                var card = db.Progress.Where(e => e.SetID == set.SetID && e.PersonName == userId);
-                set.progress[0] = (double)(card.Where(e => e.Status == 0).Count()) / (double)count * 100;
-                set.progress[2] = (double)(card.Where(e => e.Status == 3).Count()) / (double)count * 100;
-                set.progress[1] = 100 - set.progress[0] - set.progress[2];
+                var userId = HttpContext.Request.QueryString.Value.Split('=')[1];
+                var userSets = db.Sets.Where(e => e.PersonId == userId || e.PersonId == null);
+                foreach (var set in userSets)
+                {
+                    var count = set.CountOfCards;
+                    var card = db.Progress.Where(e => e.SetID == set.SetID && e.PersonName == userId);
+                    set.progress[0] = (double)(card.Where(e => e.Status == 0).Count()) / (double)count * 100;
+                    set.progress[2] = (double)(card.Where(e => e.Status == 3).Count()) / (double)count * 100;
+                    set.progress[1] = 100 - set.progress[0] - set.progress[2];
+                }
+                return userSets;
             }
-            return userSets;
+            catch
+            {
+                return new Set[0] { };
+            }
         }
 
         [HttpPost]
