@@ -12,6 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using WebApp.Services;
+using Microsoft.Extensions.Logging;
 
 namespace WebApp
 {
@@ -33,15 +36,38 @@ namespace WebApp
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+             {
+                 options.SignIn.RequireConfirmedAccount = true;
+                 options.SignIn.RequireConfirmedEmail = true;
+                 options.Password.RequireNonAlphanumeric = false;
+                 options.Password.RequireUppercase = false;
+                 options.Password.RequiredLength = 6;
+             })
+                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer(Configuration.GetSection("IdentityServer"))
                  .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+            services.AddAuthentication()
+                .AddGoogle(googleOptions =>
+                    {
+                        googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                        googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                    });
 
+            services.AddTransient<IEmailSender, SimpleEmailSender>(serviceProvider =>
+                new SimpleEmailSender(
+                    serviceProvider.GetRequiredService<ILogger<SimpleEmailSender>>(),
+                    serviceProvider.GetRequiredService<IWebHostEnvironment>(),
+                    Configuration["SimpleEmailSender:Host"],
+                    Configuration.GetValue<int>("SimpleEmailSender:Port"),
+                    Configuration.GetValue<bool>("SimpleEmailSender:EnableSSL"),
+                    Configuration["SimpleEmailSender:UserName"],
+                    Configuration["SimpleEmailSender:Password"]
+                ));
             services.AddControllersWithViews();
             services.AddRazorPages();
 
