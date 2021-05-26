@@ -21,12 +21,12 @@ export default class App extends Component {
       <StarsBackground/>
           <Layout>
               <Switch>
-                <Route exact path="/" component={Home} />
-                <AuthorizeRoute path="/check" component={Check} />
-                <AuthorizeRoute path="/new-collection" component={NewCollection} />
-                <AuthorizeRoute path="/checkCard" component={CheckCard} />
-                <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+                  <Route exact path="/" component={Home} />
+                  <AuthorizeRoute path="/check" component={Check} />
+                  <AuthorizeRoute path="/new-collection" component={NewCollection} />
+                  <AuthorizeRoute path="/checkCard" component={CheckCard} />
               </Switch>
+              <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout> </>
     );
   }
