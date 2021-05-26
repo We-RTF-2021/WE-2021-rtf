@@ -20,9 +20,12 @@ namespace WebApp.Controllers
 
         private readonly ApplicationDbContext db;
 
-        public SetController(ApplicationDbContext db)
+        private readonly ILogger<SetController> _logger;
+
+        public SetController(ILogger<SetController> logger, ApplicationDbContext d)
         {
-            this.db = db;
+            _logger = logger;
+            db = d;
         }
         [HttpGet]
         public IEnumerable<Set> Get()

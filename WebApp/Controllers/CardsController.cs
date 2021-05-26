@@ -21,9 +21,12 @@ namespace WebApp.Controllers
 
         private readonly ApplicationDbContext db;
 
-        public CardController(ApplicationDbContext db)
+        private readonly ILogger<CardController> _logger;
+
+        public CardController(ILogger<CardController> logger, ApplicationDbContext d)
         {
-            this.db = db;
+            _logger = logger;
+            db = d;
         }
         [HttpGet]
         public IEnumerable<ResultDTO> Get()
