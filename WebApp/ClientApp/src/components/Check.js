@@ -19,7 +19,8 @@ export class Check extends Component {
     getCollection() {
         const result = [];
         for (const e of this.state.collection) {
-            let grad = `linear-gradient(to right, rgb(173,255,47) ${e.progress[2]}%, yellow ${(e.progress[2] + (e.progress[2] > 5 ? 5 : 0))}%, yellow ${e.progress[2] + e.progress[1]}%, red ${e.progress[2] + e.progress[1] + 5}%)`
+            let grad = e.progress[0] === 100 ? 'red' : e.progress[1] === 100 ? 'yellow' : e.progress[2] === 100 ? 'green' :
+                `linear-gradient(to right, red 0%, yellow ${e.progress[0]}%, yellow ${e.progress[1] + e.progress[0]}%, green 100%)`;
             result.push(
                 <Link className="collection" key={result.length} to={{ pathname: "/checkCard", propsSearch: e.setID }}>
                     <p><b>{e.name}</b></p>
@@ -42,7 +43,7 @@ export class Check extends Component {
 
     render() {
         let contents = this.state.loading
-            ? <Loader/>
+            ? <Loader />
             : this.getCollection();
         return (
             <div className="collections-box">
