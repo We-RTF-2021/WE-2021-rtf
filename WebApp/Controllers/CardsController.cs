@@ -36,6 +36,10 @@ namespace WebApp.Controllers
             var setId = s[3];
             var cardsIds = db.Progress.ToList().Where(e => e.SetID.ToString() == setId && e.PersonName == userId);
             var result = new List<ResultDTO>();
+            if (cardsIds.Count() == 0)
+            {
+                GetCardsForNewUser(userId);
+            }
             foreach (var e in db.Cards)
             {
                 foreach (var f in cardsIds)
@@ -45,6 +49,24 @@ namespace WebApp.Controllers
                     }
             }
             return result;
+        }
+
+        List<ResultDTO> GetCardsForNewUser(string userId)
+        {
+            var result = new List<ResultDTO>();
+            var setIds = db.Sets.ToList().Where(e => e.PersonId == null);
+            foreach (var e in db.Cards)
+            {
+                foreach (var f in setIds)
+                    if (e.SetID == f.SetID)
+                    {
+                        result.Add(new ResultDTO() { status = 0, card = e });
+                        db.Progress.Add(new Progress(userId, e.CardID, e.SetID));
+                    }
+            }
+            db.SaveChangesAsync();
+            return result;
+
         }
 
         public class ResultDTO
