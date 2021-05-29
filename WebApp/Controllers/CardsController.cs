@@ -38,7 +38,7 @@ namespace WebApp.Controllers
             var result = new List<ResultDTO>();
             if (cardsIds.Count() == 0)
             {
-                GetCardsForNewUser(userId);
+                return GetCardsForNewUser(userId);
             }
             foreach (var e in db.Cards)
             {
