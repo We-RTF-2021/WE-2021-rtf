@@ -38,8 +38,8 @@ namespace WebApp
 
             services.AddDefaultIdentity<ApplicationUser>(options =>
              {
-                 options.SignIn.RequireConfirmedAccount = true;
-                 options.SignIn.RequireConfirmedEmail = true;
+                 options.SignIn.RequireConfirmedAccount = false;
+                 options.SignIn.RequireConfirmedEmail = false;
                  options.Password.RequireNonAlphanumeric = false;
                  options.Password.RequireUppercase = false;
                  options.Password.RequiredLength = 6;
@@ -58,16 +58,16 @@ namespace WebApp
             //             googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
             //         });
 
-            services.AddTransient<IEmailSender, SimpleEmailSender>(serviceProvider =>
-                new SimpleEmailSender(
-                    serviceProvider.GetRequiredService<ILogger<SimpleEmailSender>>(),
-                    serviceProvider.GetRequiredService<IWebHostEnvironment>(),
-                    Configuration["SimpleEmailSender:Host"],
-                    Configuration.GetValue<int>("SimpleEmailSender:Port"),
-                    Configuration.GetValue<bool>("SimpleEmailSender:EnableSSL"),
-                    Configuration["SimpleEmailSender:UserName"],
-                    Configuration["SimpleEmailSender:Password"]
-                ));
+            // services.AddTransient<IEmailSender, SimpleEmailSender>(serviceProvider =>
+            //     new SimpleEmailSender(
+            //         serviceProvider.GetRequiredService<ILogger<SimpleEmailSender>>(),
+            //         serviceProvider.GetRequiredService<IWebHostEnvironment>(),
+            //         Configuration["SimpleEmailSender:Host"],
+            //         Configuration.GetValue<int>("SimpleEmailSender:Port"),
+            //         Configuration.GetValue<bool>("SimpleEmailSender:EnableSSL"),
+            //         Configuration["SimpleEmailSender:UserName"],
+            //         Configuration["SimpleEmailSender:Password"]
+            //     ));
             services.AddControllersWithViews();
             services.AddRazorPages();
 
